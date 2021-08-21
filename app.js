@@ -3,6 +3,7 @@ const app = express();
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 const registerRoutes = require("./routes/register");
+const commentRoutes = require("./routes/comment");
 const path = require("path");
 
 app.use((req, res, next) => {
@@ -22,5 +23,6 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/registers", registerRoutes);
+app.use("/comments", commentRoutes);
 
 module.exports = app;
