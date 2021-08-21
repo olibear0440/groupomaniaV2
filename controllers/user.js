@@ -1,5 +1,4 @@
 const database = require("../sqlconnection");
-const dataBase = require("../sqlconnection");
 
 //creer un utilisateur
 exports.createUser = (req, res, next) => {
@@ -9,7 +8,7 @@ exports.createUser = (req, res, next) => {
   const password = req.body.password;
   const userRole = req.body.userRole;
   const userArray = [lastname, firstname, email, password, userRole];
-  dataBase.query(
+  database.query(
     "INSERT INTO users (lastname, firstname, email, password, userRole) VALUES (?,?,?,?,?)",
     userArray,
     (err, rows, fields) => {
@@ -21,7 +20,7 @@ exports.createUser = (req, res, next) => {
 
 //Afficher les utilisateurs
 exports.getUsers = (req, res, next) => {
-  dataBase.query("SELECT * FROM users", (err, rows, fields) => {
+  database.query("SELECT * FROM users", (err, rows, fields) => {
     if (!err) res.send(rows);
     else console.log(err);
   });
