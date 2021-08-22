@@ -1,7 +1,7 @@
 const database = require("../sqlconnection");
 
 //Afficher les posts
-exports.getposts = (req, res, next) => {
+exports.getPosts = (req, res, next) => {
   database.query(
     "SELECT a.*, b.firstname, b.lastname FROM posts a INNER JOIN users b ON a.user_id = b.id ORDER BY a.postDate DESC",
     (err, rows, fields) => {

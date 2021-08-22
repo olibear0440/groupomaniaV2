@@ -59,25 +59,91 @@ exports.login = (req, res, next) => {
     "SELECT * FROM users WHERE email=?",
     [req.body.email],
     (err, results, fields) => {
-      if (!err) res.send(results);
-      else {
-        return res.status(401).json({ error: "Utilisateur non trouvé !" });
+      if (err) return res.status(500).json({ error: "Erreur systeme !" });
+      if (results.length !== 1) {
+        return res.status(401).json({ error: "Identification incorrecte !" });
       }
+      bcrypt.compare(req.body.password, results[0].password, (err, valid) => {
+        if (err) {
+          return res.status(502).json({ error: "Erreur !" });
+        }
+        if (!valid) {
+          return res.status(402).json({ error: "Erreur d'identification !" });
+        } else {
+          return res.status(200).json({
+            userId: results[0].id,
+            firstname: results[0].firstname,
+            lastname: results[0].lastname,
+            userRole: results[0].userRole,
+            token: jwt.sign({ userId: results[0].id }, "RANDOM_TOKEN_SECRET", {
+              expiresIn: "24h",
+            }),
+          });
+        }
+      });
+    }
+  );
+};
+
+/*
+      
+      
       bcrypt
-        .compare(req.body.password, results.password)
+        .compare(req.body.password, results[0].password)
         .then((valid) => {
           if (!valid) {
-            return res.status(401).json({ error: "Mot de passe incorrect !" });
+            return res
+              .status(402)
+              .json({ error: "Identification incorrecte !" });
           }
           //Si compare ok renvoi id et le token
           res.status(200).json({
-            userId: results.id,
-            token: jwt.sign({ userId: results.id }, "RANDOM_TOKEN_SECRET", {
+            userId: results[0].id,
+            token: jwt.sign({ userId: results[0].id }, "RANDOM_TOKEN_SECRET", {
               expireIn: "24h",
             }),
           });
         })
-        .catch((error) => res.status(500).json({ error }));
+        .catch((error) => res.status(502).json({ error }));
+        */
+/*
+//connecter un utilisateur existant
+exports.login = (req, res, next) => {
+  //Trouver l'utilisateur pas l'email
+  database.query(
+    "SELECT * FROM users WHERE email=?",
+    [req.body.email],
+    (err, results, rows) => {
+      //si utilisateur ok
+      if (results.length > 0) {
+        //comparer le password avec bcrypt
+        bcrypt
+          .compare(req.body.password, results[0].password)
+          .then((valid) => {
+            //si mdp non coherent
+            if (!valid) {
+              res.status(401).json({ message: "identification incorrecte !" });
+            } else {
+              res.status(200).json({
+                //message: "ok",
+
+                userId: results[0].id,
+                firstname: results[0].firstname,
+                lastname: results[0].lastname,
+                userRole: results[0].userRole,
+                token: jwt.sign(
+                  { userId: results[0].id },
+                  "RANDOM_TOKEN_SECRET",
+                  { expireIn: "24h" }
+                ),
+              });
+            }
+          })
+          .catch((error) => res.status(502).json({ error }));
+      } else {
+        res.status(402).json({ message: "Identification incorrecte !" });
+      }
     }
   );
 };
+*/
