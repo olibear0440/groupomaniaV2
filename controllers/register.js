@@ -24,7 +24,9 @@ newPassword
 
 //enregistrer un utilisateur
 exports.signup = (req, res, next) => {
-  if (newPassword.validate(req.body.password)) {
+  if (!newPassword.validate(req.body.password)) {
+    return res.status(400).json({ error: "Mot de passe non valide !" });
+  } else if (newPassword.validate(req.body.password)) {
     bcrypt
       .hash(req.body.password, 10)
       .then((hash) => {
@@ -46,9 +48,7 @@ exports.signup = (req, res, next) => {
           }
         );
       })
-      .catch((error) => res.status(500).json({ error }));
-  } else {
-    throw "Le mot de passe doit contenir entre 8 et 20 caractères dont une majuscule, une minuscule, un chiffre et symbole";
+      .catch((error) => res.status(501).json({ error }));
   }
 };
 
