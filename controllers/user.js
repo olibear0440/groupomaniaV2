@@ -26,6 +26,18 @@ exports.getUsers = (req, res, next) => {
   });
 };
 
+//afficher un utilisateur
+exports.getOneUser = (req, res, next) => {
+  database.query(
+    "SELECT * FROM users WHERE id = ?",
+    [req.params.id],
+    (err, rows, fields) => {
+      if (!err) res.send(rows);
+      else console.log(err);
+    }
+  );
+};
+
 //supprimer un utilisateur
 exports.deleteUser = (req, res, next) => {
   database.query(

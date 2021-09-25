@@ -1,10 +1,11 @@
 const express = require("express");
-const app = express();
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 const registerRoutes = require("./routes/register");
 const commentRoutes = require("./routes/comment");
 const path = require("path");
+
+const app = express();
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -19,7 +20,10 @@ app.use((req, res, next) => {
   next();
 });
 app.use(express.json());
+
 app.use("/images", express.static(path.join(__dirname, "images")));
+
+//les routes
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/registers", registerRoutes);
