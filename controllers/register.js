@@ -70,14 +70,23 @@ exports.login = (req, res, next) => {
         if (!valid) {
           return res.status(402).json({ error: "Erreur d'identification !" });
         } else {
+          const token = jwt.sign(
+            { userId: results[0].id },
+            "RANDOM_TOKEN_SECRET",
+            {
+              expiresIn: "24h",
+            }
+          );
+          database.query("update users set token = ? where id = ?  ", [
+            token,
+            results[0].id,
+          ]);
           return res.status(200).json({
             userId: results[0].id,
             firstname: results[0].firstname,
             lastname: results[0].lastname,
             userRole: results[0].userRole,
-            token: jwt.sign({ userId: results[0].id }, "RANDOM_TOKEN_SECRET", {
-              expiresIn: "24h",
-            }),
+            token: token,
           });
         }
       });
