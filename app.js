@@ -4,6 +4,7 @@ const postRoutes = require("./routes/post");
 const registerRoutes = require("./routes/register");
 const commentRoutes = require("./routes/comment");
 const path = require("path");
+const cors = require("cors");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use((req, res, next) => {
   );
   next();
 });
+app.use(cors());
 app.use(express.json());
 
 app.use("/images", express.static(path.join(__dirname, "images")));

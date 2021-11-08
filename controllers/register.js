@@ -26,12 +26,13 @@ newPassword
 exports.signup = (req, res, next) => {
   if (!newPassword.validate(req.body.password)) {
     return res.status(400).json({ error: "Mot de passe non valide !" });
-  } else if (newPassword.validate(req.body.password)) {
+  } else {
     bcrypt
       .hash(req.body.password, 10)
       .then((hash) => {
         const firstname = req.body.firstname;
         const lastname = req.body.lastname;
+        //const picture = req.body.picture;
         const email = req.body.email;
         const password = hash;
         //creer l'utilisateur
@@ -39,10 +40,8 @@ exports.signup = (req, res, next) => {
           "INSERT INTO users (firstname, lastname, email, password) VALUES (?,?,?,?)",
           [firstname, lastname, email, password],
           (err, rows, fields) => {
-            //if (!err) res.send(rows);
-            //else console.log(err);
             if (err) {
-              return res.status(400).json({ error });
+              return res.status(400).json(err);
             }
             return res.status(201).json({ message: "Utilisateur créé !" });
           }
@@ -77,17 +76,18 @@ exports.login = (req, res, next) => {
               expiresIn: "24h",
             }
           );
-          database.query("update users set token = ? where id = ?  ", [
+          /*database.query("update users set token = ? where id = ?  ", [
             token,
             results[0].id,
-          ]);
-          return res.status(200).json({
-            userId: results[0].id,
-            firstname: results[0].firstname,
-            lastname: results[0].lastname,
-            userRole: results[0].userRole,
-            token: token,
-          });
+          ]);*/
+          const query =
+            "update users set Token = '" +
+            token +
+            "' where id = " +
+            results[0].id;
+          database.query(query);
+          results[0].token = token;
+          return res.status(200).json(results[0]);
         }
       });
     }

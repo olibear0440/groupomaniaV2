@@ -4,8 +4,10 @@ const multer = require("../middleware/multer-config");
 const auth = require("../middleware/auth");
 const userCtrl = require("../controllers/user");
 
-router.get("/", auth, userCtrl.getUsers);
+
+router.get("/", userCtrl.getUsers);
 router.get("/:id", auth, userCtrl.getOneUser);
+router.get("/currentUser", auth, multer, userCtrl.getCurrentUser);
 router.post("/", auth, multer, userCtrl.createUser);
 router.delete("/:id", auth, userCtrl.deleteUser);
 

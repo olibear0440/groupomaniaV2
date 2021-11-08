@@ -4,12 +4,13 @@ const database = require("../sqlconnection");
 exports.createUser = (req, res, next) => {
   const lastname = req.body.lastname;
   const firstname = req.body.firstname;
+  const picture = req.body.picture;
   const email = req.body.email;
   const password = req.body.password;
   const userRole = req.body.userRole;
-  const userArray = [lastname, firstname, email, password, userRole];
+  const userArray = [lastname, firstname, picture, email, password, userRole];
   database.query(
-    "INSERT INTO users (lastname, firstname, email, password, userRole) VALUES (?,?,?,?,?)",
+    "INSERT INTO users (firstname, lastname, picture, email, password, userRole) VALUES (?,?,?,?,?,?)",
     userArray,
     (err, rows, fields) => {
       if (!err) res.send(rows);
@@ -31,6 +32,19 @@ exports.getOneUser = (req, res, next) => {
   database.query(
     "SELECT * FROM users WHERE id = ?",
     [req.params.id],
+    (err, rows, fields) => {
+      if (!err) res.send(rows);
+      else console.log(err);
+    }
+  );
+};
+
+//appel de l'utilisateur de la session
+exports.getCurrentUser = (req, res, next) => {
+  let tokenConfig = [req.headers["authorization"]];
+  database.query(
+    "SELECT * FROM users WHERE Token = ?",
+    tokenConfig,
     (err, rows, fields) => {
       if (!err) res.send(rows);
       else console.log(err);
