@@ -1,11 +1,23 @@
+//import package express
 const express = require("express");
-const userRoutes = require("./routes/user");
-const postRoutes = require("./routes/post");
-const registerRoutes = require("./routes/register");
-const commentRoutes = require("./routes/comment");
+
+//import variable d'environnement
+require('dotenv').config()
+//console.log(process.env.MESSAGE)
+
 const path = require("path");
 const cors = require("cors");
 
+//import morgan
+const morgan = require("morgan");
+
+//import des routes
+const registerRoutes = require("./routes/register");
+const userRoutes = require("./routes/user");
+const postRoutes = require("./routes/post");
+const commentRoutes = require("./routes/comment");
+
+//creation de l'application express
 const app = express();
 
 app.use((req, res, next) => {
@@ -20,6 +32,7 @@ app.use((req, res, next) => {
   );
   next();
 });
+app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 
@@ -31,4 +44,5 @@ app.use("/posts", postRoutes);
 app.use("/registers", registerRoutes);
 app.use("/comments", commentRoutes);
 
+//export de l'application
 module.exports = app;

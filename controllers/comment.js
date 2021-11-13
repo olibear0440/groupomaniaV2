@@ -33,8 +33,16 @@ exports.createComment = (req, res, next) => {
     "INSERT INTO comments (commentText, commentImgUrl, commentDate, user_id, post_id) VALUES (?,?,'0000-00-00',?,?)",
     commentArray,
     (err, rows, fields) => {
-      if (!err) res.send(rows);
-      else console.log(err);
+      if (!err)
+        //res.send(rows);
+        return res.status(201).json({
+          message: "commentaire enregistré dans la base de donnée",
+          contenu: rows,
+          rendu: req.body,
+        });
+      else {
+        return res.status(401).json({ message: "error" });
+      }
     }
   );
 };

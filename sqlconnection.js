@@ -1,10 +1,13 @@
-const mysql = require('mysql');
+//import variable d'environnement
+require('dotenv').config()
+
+const mysql = require("mysql");
 
 const database = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "phpmyadmin",
-  database: "groupomania_socialnetwork",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
 });
 database.connect(function (err) {
   if (err) throw err;

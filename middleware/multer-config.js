@@ -6,6 +6,7 @@ const MIME_TYPES = {
   "image/jpeg": "jpg",
   "image/png": "png",
   "image/gif": "gif",
+  "image/webp": "webp",
 };
 
 //---configuration de multer----------------------------------------------
@@ -23,4 +24,4 @@ const storage = multer.diskStorage({
 });
 
 //export du middleware multer
-module.exports = multer({ storage }).single("image");
+module.exports = multer({ storage: storage }).single("image");
