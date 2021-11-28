@@ -9,7 +9,7 @@ const MIME_TYPES = {
   "image/webp": "webp",
 };
 
-//---configuration de multer----------------------------------------------
+//configuration de multer
 const storage = multer.diskStorage({
   //indication où enregistrer les fichiers entrants
   destination: (req, file, callback) => {

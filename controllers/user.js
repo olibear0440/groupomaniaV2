@@ -7,7 +7,8 @@ exports.createUser = (req, res, next) => {
   //const picture = req.body.picture;
   const email = req.body.email;
   const password = req.body.password;
-  const userRole = req.body.userRole;
+  //userRole = 0-> "user", 1-> "admin" dans la bdd
+  const userRole = 0;
   const userArray = [firstname, lastname, email, password, userRole];
   database.query(
     "INSERT INTO users (firstname, lastname, email, password, userRole) VALUES (?,?,?,?,?)",
@@ -38,7 +39,6 @@ exports.getUsers = (req, res, next) => {
       return res.status(400).json({
         message: " error : impossible d'afficher la liste utilisateur",
       });
-    //console.log(err);
   });
 };
 
@@ -48,29 +48,36 @@ exports.getOneUser = (req, res, next) => {
     "SELECT * FROM users WHERE id = ?",
     [req.params.id],
     (err, rows, fields) => {
-      if (!err)
-        //console.log(rows),
-        res.send(rows);
-      //console.log(err);
-      else
+      if (!err && rows.length === 1) {
+        const user = {
+          email: rows[0].email,
+          firstname: rows[0].firstname,
+          lastname: rows[0].lastname,
+          picture: rows[0].picture,
+        };
+        res.send(user);
+      } else {
         return res
           .status(400)
-          .json({ message: " error : impossible d'afficher l'utilisateur" });
+          .json({ message: " error : impossible d'afficher cet utilisateur" });
+      }
     }
   );
 };
 
 //appel de l'utilisateur de la session
 exports.getCurrentUser = (req, res, next) => {
-  //const authToken = req.headers["authorization"];
   const authToken = req.headers.authorization.split(" ")[1];
-  //console.log(authToken);
   const query = "SELECT * FROM users WHERE token = '" + authToken + "'";
-  console.log("resultat de query===>");
-  //console.log(query);
   database.query(query, (err, rows, fields) => {
-    if (!err) res.send(rows);
-    else console.log(err);
+    if (!err) {
+      if (rows.length !== 1) {
+        res.status(401).json({ error: "Utilisateur non trouvé !" });
+      }
+      res.status(200).json(rows[0]);
+    } else {
+      res.status(501).json({ err });
+    }
   });
 };
 
@@ -95,12 +102,10 @@ exports.updateUser = (req, res, next) => {
   const id = req.params.id;
   const firstname = req.body.firstname;
   const password = req.body.password;
-  const userRole = req.body.userRole;
-  const updateUserArray = [firstname, password, userRole, id];
+  const updateUserArray = [firstname, password, id];
   database.query(
-    "UPDATE users SET firstname = ?, password = ?, userRole = ? WHERE id = ?",
+    "UPDATE users SET firstname = ?, password = ? WHERE id = ?",
     updateUserArray,
-    //[req.params.id,],
     (err, rows, fields) => {
       if (!err) res.send("Infos utilisateur modifiées !");
       else console.log(err);
