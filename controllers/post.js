@@ -1,6 +1,8 @@
 const database = require("../sqlconnection");
 const fs = require("fs");
 
+
+
 //Afficher les posts
 exports.getPosts = (req, res, next) => {
   database.query(
@@ -37,25 +39,30 @@ exports.getOnePost = (req, res, next) => {
 exports.createPost = (req, res, next) => {
   const postTitre = req.body.postTitre;
   const postDescription = req.body.postDescription;
-  const postDate = req.body.postDate;
-  const user_id = req.body.user_id;
-  const postImgUrl = `${req.protocol}://${req.get("host")}/images/${
-    req.file.filename
-  }`;
-  console.log(req)
-  const postArray = [postTitre, postImgUrl, postDescription, postDate, user_id];
-  database.query(
-    "INSERT INTO posts (postTitre, postImgUrl, postDescription, postDate, user_id) VALUES (?,?,?,'0000-00-00',?)",
+  const token = req.headers.authorization.split(" ")[1];
 
+  let postImgUrl = "";
+  //console.log(req);
+  console.log("req.file===================================> ", req.file);
+  if(req.file)
+  {
+    postImgUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+    //postImgUrl = req.file.filename;
+  }
+  const postArray = [postTitre, postImgUrl, postDescription, token];
+  console.log(postArray);
+  const query = "INSERT INTO posts (postTitre, postImgUrl, postDescription, postDate, user_id) " +
+    "SELECT ?, ?, ?, CURDATE(), id FROM users WHERE token=?";
+
+    database.query(query,
     postArray,
     (err, rows, fields) => {
-      console.log("resultat du rows=>", rows);
       if (!err)
         return res.status(201).json({
           message: "Post créé dans la base de donnée",
         });
       else {
-        return res.status(401).json({ message: "error" });
+        return res.status(401).json({ message: "error: " + err });
       }
     }
   );
