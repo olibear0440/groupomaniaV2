@@ -10,7 +10,11 @@
           <h2>Creer un post</h2>
         </div>
         <div class="myPostMsg">
-          <form class="formBloc" enctype="multipart/form-data">
+          <form action="/upload" method="POST"
+            name="createPostForm"
+            class="formBloc"
+            enctype="multipart/form-data"
+          >
             <div class="formControl">
               <input
                 v-model="postTitre"
@@ -32,8 +36,7 @@
                 accept=".png, .jpg, .jpeg, .gif, .webp"
                 id="postImgUrl"
                 ref="myFiles"
-                @change="previewFiles()"
-                multiple
+                @change="uploadFile()"
                 name="postImgUrl"
                 required
               />
@@ -61,7 +64,7 @@ export default {
     return {
       postTitre: "",
       postDescription: "",
-      files: "",
+      file: "",
     };
   },
 
@@ -70,20 +73,15 @@ export default {
       this.$store.commit("btnLogout");
       this.$router.push("/");
     },
-    previewFiles() {
-      this.files = this.$refs.myFiles.files[0];
-      console.log(this.files);
+    uploadFile() {
+      this.file = this.$refs.myFiles.files[0];
+      //console.log(this.files);
     },
-    
+
     btnCreatePost() {
-      //console.log(this.postTitre, this.postDescription, this.files)
-      this.$store.dispatch("btnCreatePost", {
-        postTitre: this.postTitre,
-        postDescription: this.postDescription,
-        postImgUrl: this.files,
-      });
+      this.$store.dispatch("btnCreatePost")
+      this.$router.push("Posts");
     },
-    
   },
 };
 </script>

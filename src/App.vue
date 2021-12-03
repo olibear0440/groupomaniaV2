@@ -3,7 +3,8 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/Register">Register</router-link> |
     <router-link to="/Register">Posts</router-link> |
-    <router-link to="/Mypost">Mypost</router-link> 
+    <router-link to="/Mypost">Mypost</router-link> |
+    <router-link to="/Comments">Comments</router-link>
   </div>
   <router-view/>
 </template>

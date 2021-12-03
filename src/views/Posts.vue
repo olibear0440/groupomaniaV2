@@ -41,6 +41,7 @@
             <div>
               <img class="postsImg" :alt="post.id" :src="post.postImgUrl"/>
             </div>
+            <div class="postComments" @click="btnShowComments()">commentaires</div>
           </div>
         </div>
       </div>
@@ -73,6 +74,9 @@ export default {
     },
     btnCreateMyPost() {
       this.$router.push("/Mypost");
+    },
+    btnShowComments() {
+      this.$router.push("/Comments");
     },
     getNow(){
     const today = new Date();
@@ -191,9 +195,12 @@ section {
 .usersPosts {
   padding: 30px 40px;
 }
+.postsImg{
+  border-radius: 5px;
+}
 
 .postsInfos {
-  border: 1px solid blue;
+  border-bottom: 2px solid blue;
   padding: 5px;
   width: 100%;
   display: flex;
@@ -209,5 +216,18 @@ section {
   padding: 5px;
   font-size: 16px;
   font-family: Arial, Helvetica, sans-serif;
+}
+.postsUsersInfos, p{
+  padding: 5px;
+}
+.postComments{
+  border: 1px solid #cecece;
+  border-radius: 4px;
+  padding: 5px;
+  margin: 5px 0px;
+  cursor: pointer;
+}
+.postComments:hover{
+  background-color: #f7f7f7;
 }
 </style>

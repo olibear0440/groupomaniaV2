@@ -30,17 +30,17 @@ const state = {
   user: user,
   currentUser: [],
   allPosts: [],
-  newPost: [],
+  file: "",
 };
 const mutations = {
   SET_STATUS(state, status) {
     state.status = status;
   },
-  
+
   LOG_NEWPOST(state, newPost) {
     state.newPost = newPost;
   },
-  
+
   //recuperer header token et enregistrer dans le localstorage le user
   LOG_USER(state, user) {
     instance.defaults.headers.common["Authorization"] = user.token;
@@ -52,6 +52,9 @@ const mutations = {
   },
   GET_ALL_POSTS(state, allPosts) {
     state.allPosts = allPosts;
+  },
+  GET_ONE_POST(state, onePost) {
+    state.onePost = onePost;
   },
 
   //deconnecter la session et supprimer le user du localstorage
@@ -124,11 +127,26 @@ const actions = {
       })
       .catch(function () {});
   },
-  
+
   btnCreatePost({ commit }) {
-    //commit;
+    //recuperer le formulaire et
+    const form = document.forms["createPostForm"];
+    //rechercher l'id correspondant au selecteur
+    const myFiles = document.querySelector("#postImgUrl");
+    //creer un nouvel objet formData pour integrer les champs du formulaire (clé/valeur)
+    const formData = new FormData();
+    formData.append("postTitre", form.postTitre.value);
+    formData.append("postDescription", form.postDescription.value);
+    formData.append("postImgUrl", myFiles.files[0]);
+    //recuperer le token de l'utilisateur depuis le local storage
+    const token = JSON.parse(localStorage.getItem("user")).token;
+
     instance
-      .post("/posts")
+      .post("posts", formData, {
+        headers: {
+          Authorization: token,
+        },
+      })
       .then((response) => {
         console.log(response.data);
         commit("LOG_NEWPOST", response.data);
@@ -138,7 +156,19 @@ const actions = {
         console.log(error);
       });
   },
-  
+
+  getOnePost({ commit }) {
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    
+
+    instance
+      .get("/posts:id")
+      .then((response) => {
+        //console.log(response.data);
+        commit("GET_ONE_POST", response.data);
+      })
+      .catch(function () {});
+  },
 };
 
 export default createStore({
