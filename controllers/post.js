@@ -52,7 +52,7 @@ exports.createPost = (req, res, next) => {
   const postArray = [postTitre, postImgUrl, postDescription, token];
   console.log(postArray);
   const query = "INSERT INTO posts (postTitre, postImgUrl, postDescription, postDate, user_id) " +
-    "SELECT ?, ?, ?, CURDATE(), id FROM users WHERE token=?";
+    "SELECT ?, ?, ?, NOW(), id FROM users WHERE token=?";
 
     database.query(query,
     postArray,
