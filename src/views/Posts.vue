@@ -22,7 +22,9 @@
             <p>{{ currentUser.userRole }}</p>
           </div>
           <div class="btnForm">
-            <button class="btnCreatePost" @click="btnCreateMyPost()">Creer un post</button>
+            <button class="btnCreatePost" @click="btnCreateMyPost()">
+              Creer un post
+            </button>
           </div>
         </div>
       </div>
@@ -32,16 +34,18 @@
         </div>
         <div class="usersPosts" v-for="post in allPosts" :key="post.id">
           <div class="postsUsersInfos">
-            <p>{{ post.usersEmail}}</p>
-            <p>{{ getNow(post.postDate)}}</p>
+            <p>{{ post.usersEmail }}</p>
+            <p>{{ renderDate(post.postDate) }}</p>
           </div>
           <div class="postsInfos">
             <p>{{ post.postTitre }}</p>
             <p>{{ post.postDescription }}</p>
             <div>
-              <img class="postsImg" :alt="post.id" :src="post.postImgUrl"/>
+              <img class="postsImg" :alt="post.id" :src="post.postImgUrl" />
             </div>
-            <div class="postComments" @click="btnShowComments()">commentaires</div>
+            <router-link :to="`/posts/${post.id}`">
+              <div class="postComments">commentaires</div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -59,11 +63,7 @@ export default {
     //recuperer les infos du user
     this.$store.dispatch("getCurrentUser");
     this.$store.dispatch("getAllPosts");
-    
   },
-
-
-
   computed: {
     ...mapState(["currentUser", "allPosts"]),
   },
@@ -75,17 +75,14 @@ export default {
     btnCreateMyPost() {
       this.$router.push("/Mypost");
     },
-    btnShowComments() {
-      this.$router.push("/Comments");
+    renderDate(postDate) {
+      const d = new Date(postDate);
+      return (d.getFullYear() + "-" + 
+        ((d.getMonth()<10)? "0":"") + (d.getMonth() + 1) + "-" + 
+        ((d.getDate()<10)? "0":"") + d.getDate() + " " +
+        ((d.getHours()<10)? "0":"") + d.getHours() + ":" + 
+        ((d.getMinutes()<10)? "0":"") + d.getMinutes());
     },
-    getNow(){
-    const today = new Date();
-    const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    const time = today.getHours() + ":" + today.getMinutes() + ":" + 
-    today.getSeconds();
-    const dateTime = date+' '+time;
-    return dateTime
-  }
   },
 };
 </script>
@@ -195,7 +192,7 @@ section {
 .usersPosts {
   padding: 30px 40px;
 }
-.postsImg{
+.postsImg {
   border-radius: 5px;
 }
 
@@ -217,17 +214,18 @@ section {
   font-size: 16px;
   font-family: Arial, Helvetica, sans-serif;
 }
-.postsUsersInfos, p{
+.postsUsersInfos,
+p {
   padding: 5px;
 }
-.postComments{
+.postComments {
   border: 1px solid #cecece;
   border-radius: 4px;
   padding: 5px;
   margin: 5px 0px;
   cursor: pointer;
 }
-.postComments:hover{
+.postComments:hover {
   background-color: #f7f7f7;
 }
 </style>

@@ -2,9 +2,10 @@
   <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/Register">Register</router-link> |
-    <router-link to="/Register">Posts</router-link> |
+    <!--<router-link to="/Register">Posts</router-link> |
     <router-link to="/Mypost">Mypost</router-link> |
-    <router-link to="/Comments">Comments</router-link>
+    <router-link to="/Posts:id">ThisPost</router-link>
+    -->
   </div>
   <router-view/>
 </template>

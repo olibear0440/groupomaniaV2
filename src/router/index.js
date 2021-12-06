@@ -3,7 +3,7 @@ import Home from "../views/Home.vue";
 import Register from "../views/Register.vue";
 import Posts from "../views/Posts.vue";
 import Mypost from "../views/Mypost.vue";
-import Comments from "../views/Comments.vue"
+import ThisPost from "../views/ThisPost.vue"
 
 const routes = [
   {
@@ -27,9 +27,9 @@ const routes = [
     component: Mypost,
   },
   {
-    path: "/Comments",
-    name: "Comments",
-    component: Comments,
+    path: "/Posts/:id",
+    name: "ThisPost",
+    component: ThisPost,
   },
   {
     path: "/about",
