@@ -1,12 +1,12 @@
 const database = require("../sqlconnection");
 const fs = require("fs");
 
-
-
 //Afficher les posts
 exports.getPosts = (req, res, next) => {
   database.query(
-    "SELECT a.*, b.firstname, b.lastname , b.email as usersEmail FROM posts a INNER JOIN users b ON a.user_id = b.id ORDER BY a.postDate DESC",
+    "SELECT a.*, b.firstname, b.lastname , b.email as usersEmail, ifnull(c.comCount, 0) as comCount " + 
+    "FROM posts a INNER JOIN users b ON a.user_id = b.id " + 
+    "LEFT OUTER JOIN (SELECT post_id, COUNT(id) as comCount FROM comments GROUP BY post_id) c ON a.id = c.post_id ORDER BY a.postDate DESC",
     (err, rows, fields) => {
       console.log(rows);
       if (!err) res.send(rows);
@@ -22,7 +22,10 @@ exports.getPosts = (req, res, next) => {
 //afficher un post avec id
 exports.getOnePost = (req, res, next) => {
   database.query(
-    "SELECT a.*, b.firstname, b.lastname, b.email as usersEmail FROM posts a INNER JOIN users b ON a.user_id = b.id WHERE a.id = ? ORDER BY a.postDate DESC",
+    "SELECT a.*, b.firstname, b.lastname, b.email as usersEmail, ifnull(c.comCount, 0) as comCount " + 
+    "FROM posts a INNER JOIN users b ON a.user_id = b.id " +
+    "LEFT OUTER JOIN (SELECT post_id, COUNT(id) as comCount FROM comments GROUP BY post_id) c ON a.id = c.post_id " + 
+    "WHERE a.id = ? ORDER BY a.postDate DESC",
     [req.params.id],
     (err, rows, fields) => {
       if (!err) res.send(rows);
@@ -40,32 +43,25 @@ exports.createPost = (req, res, next) => {
   const postTitre = req.body.postTitre;
   const postDescription = req.body.postDescription;
   const token = req.headers.authorization.split(" ")[1];
-
   let postImgUrl = "";
-  //console.log(req);
-  console.log("req.file===================================> ", req.file);
-  if(req.file)
-  {
-    postImgUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
-    //postImgUrl = req.file.filename;
+  if (req.file) {
+    postImgUrl = `${req.protocol}://${req.get("host")}/images/${
+      req.file.filename
+    }`;
   }
   const postArray = [postTitre, postImgUrl, postDescription, token];
-  console.log(postArray);
-  const query = "INSERT INTO posts (postTitre, postImgUrl, postDescription, postDate, user_id) " +
+  const query =
+    "INSERT INTO posts (postTitre, postImgUrl, postDescription, postDate, user_id) " +
     "SELECT ?, ?, ?, NOW(), id FROM users WHERE token=?";
-
-    database.query(query,
-    postArray,
-    (err, rows, fields) => {
-      if (!err)
-        return res.status(201).json({
-          message: "Post créé dans la base de donnée",
-        });
-      else {
-        return res.status(401).json({ message: "error: " + err });
-      }
+  database.query(query, postArray, (err, rows, fields) => {
+    if (!err)
+      return res.status(201).json({
+        message: "Post créé dans la base de donnée",
+      });
+    else {
+      return res.status(401).json({ message: "error: " + err });
     }
-  );
+  });
 };
 
 exports.deletePost = (req, res, next) => {
