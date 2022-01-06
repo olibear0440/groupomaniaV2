@@ -7,7 +7,6 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 // Protéger les routes et vérifier que l'utilisateur est authentifié
-
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
@@ -16,8 +15,7 @@ module.exports = (req, res, next) => {
     // chercher si le user avec ce id et ce token existe dans la BdD
     const query =
       "SELECT * FROM users WHERE id=" + userId + " AND Token='" + token + "'";
-
-    database.query(query, (err, results, fields) => {
+    database.query(query, null, (err, results, fields) => {
       if (err) return res.status(500).json({ error: "Erreur systeme !" });
       if (results.length !== 1) {
         return res.status(401).json({ error: "Erreur accès!" });

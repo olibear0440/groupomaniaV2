@@ -13,7 +13,7 @@ const MIME_TYPES = {
 const storage = multer.diskStorage({
   //indication où enregistrer les fichiers entrants
   destination: (req, file, callback) => {
-    callback(null, 'images');
+    callback(null, "images");
   },
   //indication d'utiliser des parametres: nom d'origine, espace vs underscore, ajout de timestamp comme nom de fichier
   filename: (req, file, callback) => {
