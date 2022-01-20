@@ -1,38 +1,8 @@
 const database = require("../sqlconnection");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+require("dotenv").config();
 
-/*
-//creer un utilisateur
-exports.createUser = (req, res, next) => {
-  const firstname = req.body.firstname;
-  const lastname = req.body.lastname;
-  //const picture = req.body.picture;
-  const email = req.body.email;
-  const password = req.body.password;
-  //userRole = 0-> "user", 1-> "admin" dans la bdd
-  const userRole = 3;
-  const userArray = [firstname, lastname, email, password, userRole];
-  console.log(userArray)
-  database.query(
-    "INSERT INTO users (firstname, lastname, email, password, userRole) VALUES (?,?,?,?,?)",
-    userArray,
-    (err, rows, fields) => {
-      if (!err)
-        //res.send(rows);
-        return res.status(201).json({
-          message: "Objet enregistré dans la base de donnée",
-          contenu: rows,
-          rendu: req.body,
-        });
-      else {
-        return res.status(401).json({
-          message: "error : Utilisateur non créé dans la base de donnée ",
-        });
-      }
-      //
-    }
-  );
-};
-*/
 //Afficher tous les utilisateurs
 exports.getUsers = (req, res, next) => {
   database.query("SELECT * FROM users", (err, rows, fields) => {
@@ -55,7 +25,7 @@ exports.getOneUser = (req, res, next) => {
           email: rows[0].email,
           firstname: rows[0].firstname,
           lastname: rows[0].lastname,
-          picture: rows[0].picture,
+          password: rows[0].password,
         };
         res.send(user);
       } else {
@@ -99,18 +69,47 @@ exports.deleteUser = (req, res, next) => {
   );
 };
 
-//modifier un utilisateur
+//modifier le mot de passe de l'utilisateur
 exports.updateUser = (req, res, next) => {
-  const id = req.params.id;
-  const firstname = req.body.firstname;
-  const password = req.body.password;
-  const updateUserArray = [firstname, password, id];
+  const token = req.headers.authorization.split(" ")[1];
+  const userId = jwt.decode(token, process.env.JWT_KEY).userId;
   database.query(
-    "UPDATE users SET firstname = ?, password = ? WHERE id = ?",
-    updateUserArray,
-    (err, rows, fields) => {
-      if (!err) res.send("Infos utilisateur modifiées !");
-      else console.log(err);
+    "SELECT * FROM users WHERE id=?",
+    [userId],
+    (err, results, fields) => {
+      if (err) return res.status(500).json({ error: "Erreur systeme !" });
+      //Si le resultat est null ou supérieur à 1 retour de la bdd
+      if (results.length !== 1) {
+        return res.status(401).json({ error: "Utilisateur non trouvé !" });
+      }
+      //si utilisateur trouvé on compare le password a la requete du frontEnd
+      bcrypt
+        .compare(req.body.currentPassword, results[0].password)
+        .then((valid) => {
+          if (!valid) {
+            return res.status(401).json({ error: "Mot de passe incorrect !" });
+          }
+          //Si password reconnu, on crypte le nouveau mot de passe...
+          bcrypt
+            .hash(req.body.newPassword, 10)
+            .then((newPassword) => {
+              //...on passe la requete de modification du mot de passe
+              database.query(
+                "UPDATE users SET password=? WHERE id=?",
+                [newPassword, userId],
+                (err, rows, field) => {
+                  if (err) {
+                    return res.status(400).json(err);
+                  }
+                  return res
+                    .status(201)
+                    .json({ message: "mot de passe utilisateur modifié !" });
+                }
+              );
+            })
+            .catch((error) => res.status(501).json({ error }));
+        })
+        .catch((error) => res.status(501).json({ error }));
     }
   );
 };

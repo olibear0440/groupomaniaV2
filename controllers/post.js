@@ -106,7 +106,7 @@ exports.deletePost = (req, res, next) => {
           if (rows[0].postImgUrl) {
             const filename = rows[0].postImgUrl.split("/images/")[1];
             //...suppression du fichier avec la methode fs.unlink
-            fs.unlink(`images/${filename}`);
+            fs.unlinkSync(`images/${filename}`);
           }
           //...puis suppression du post
           database.query(
