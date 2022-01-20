@@ -1,34 +1,31 @@
 <template>
+  <div id="app">
+    <!--
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/Register">Register</router-link> |
-    <!--<router-link to="/Register">Posts</router-link> |
+    <router-link to="/">Accueil</router-link> - 
+    <router-link to="/Register">Acceder à votre compte</router-link> 
+    
     <router-link to="/Mypost">Mypost</router-link> |
     <router-link to="/Posts:id">ThisPost</router-link>
-    -->
+    
   </div>
-  <router-view/>
+  -->
+    <router-view />
+  </div>
 </template>
 
+<script></script>
+
 <style lang="scss">
+body {
+  background-color: rgb(255, 215, 215);
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  height: auto;
 }
 </style>

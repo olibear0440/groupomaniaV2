@@ -1,5 +1,8 @@
 <template>
-  <section>
+  <div class="registerBloc">
+    <div class="registerLogo">
+      <img class="homeLogo" src="../assets/img/logoSimple.png" alt="logo groupomania" />
+    </div>
     <div class="createAccount">
       <div id="formTitre">
         <h1 v-if="mode == 'loginAccount'">Connexion</h1>
@@ -16,7 +19,7 @@
             <span @click="switchToLoginAccount()">Se connecter </span>
           </p>
 
-          <div v-if="mode == 'createAccount'">
+          <div class="createAccountField" v-if="mode == 'createAccount'">
             <input
               v-model="nom"
               type="text"
@@ -94,7 +97,7 @@
         </div>
       </form>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -138,7 +141,6 @@ export default {
     },
 
     btnCreateAccount: function () {
-      //console.log(this.nom, this.prenom, this.email, this.motDePasse)
       let self = this;
       this.$store
         .dispatch("btnCreateAccount", {
@@ -158,85 +160,6 @@ export default {
 };
 </script>
 
-<style scoped>
-section {
-  font-family: Arial, Helvetica, sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0px 0px 50px 0px;
-}
-.createAccount {
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-  width: 400px;
-  max-width: 100%;
-  margin-bottom: 20px;
-}
-#formTitre {
-  background-color: #f7f7f7;
-  border-bottom: 1px solid #f0f0f0;
-  padding: 20px 40px;
-}
-#formTitre h1 {
-  margin: 0;
-}
-.switchLogin {
-  font-size: 12px;
-}
-span {
-  color: blue;
-  text-decoration-line: underline;
-  cursor: pointer;
-}
-.btnLoading,
-.btnValidated {
-  text-decoration: none;
-  color: white;
-  font-size: 16px;
-  font-family: inherit;
-}
-.errorLogin {
-  font-size: 14px;
-  color: red;
-}
-
-.formSignup {
-  padding: 30px 40px;
-}
-.formControl {
-  margin-bottom: 10px;
-  padding-bottom: 20px;
-  position: relative;
-}
-
-.formControl label {
-  display: inline-block;
-  margin-bottom: 5px;
-  font-weight: 600;
-}
-
-.formControl input {
-  border: 2px solid #f0f0f0;
-  border-radius: 4px;
-  display: block;
-  font-family: inherit;
-  font-size: 14px;
-  width: 297px;
-  padding: 10px;
-}
-.confirmForm {
-  background-color: #8e44ad;
-  border: 2px solid #8e44ad;
-  color: white;
-  display: block;
-  padding: 10px;
-  width: 100%;
-  font-size: 16px;
-  font-family: inherit;
-  cursor: pointer;
-}
+<style scoped lang="scss">
+@import "../assets/register.css";
 </style>

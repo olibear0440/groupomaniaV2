@@ -30,8 +30,13 @@ const state = {
   user: user,
   currentUser: [],
   allPosts: [],
+  allCom: [],
   file: "",
   thisPost: [],
+  deleteThisCom: [],
+  deleteThisPost: [],
+  postLike: [],
+  //updateMdp: "",
 };
 
 const mutations = {
@@ -39,8 +44,15 @@ const mutations = {
     state.status = status;
   },
 
+  UPDATE_MDP(state, newMdp) {
+    state.newMdp = newMdp;
+  },
+
   LOG_NEWPOST(state, newPost) {
     state.newPost = newPost;
+  },
+  LOG_NEWCOMMENT(state, newComment) {
+    state.newComment = newComment;
   },
   //recuperer header token et enregistrer dans localstorage le user
   LOG_USER(state, user) {
@@ -54,8 +66,20 @@ const mutations = {
   GET_ALL_POSTS(state, allPosts) {
     state.allPosts = allPosts;
   },
+  GET_ALL_COM(state, allCom) {
+    state.allCom = allCom;
+  },
   GET_THISPOST(state, thisPost) {
     state.thisPost = thisPost;
+  },
+  DELETE_THISCOM(state, deleteThisCom) {
+    state.deleteThisCom = deleteThisCom;
+  },
+  DELETE_THISPOST(state, deleteThisPost) {
+    state.deleteThisPost = deleteThisPost;
+  },
+  POST_LIKE(state, postLike) {
+    state.postLike = postLike;
   },
 
   //deconnecter la session et supprimer le user du localstorage
@@ -94,7 +118,6 @@ const actions = {
       instance
         .post("/registers/signup", newUser)
         .then(function (response) {
-          //console.log(response);
           commit("SET_STATUS", "created");
           resolve(response);
         })
@@ -103,6 +126,33 @@ const actions = {
           reject(error);
         });
     });
+  },
+
+  //appel api pour le changement de mot de passe
+  btnChangeMdp({ commit }) {
+    if (
+      window.confirm("Veuillez noter votre nouveau mot de passe avant de valider") !=
+      true
+    ) {
+      return;
+    }
+    const form = document.forms["formChangeMdp"];
+    const formData = {
+      currentPassword: form.currentPassword.value,
+      newPassword: form.newPassword.value,
+    };
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    instance
+      .put("users", formData, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => {
+        commit("UPDATE_MDP", response.data);
+        window.location.reload();
+      })
+      .catch((error) => console.log(error));
   },
 
   //appel api de l'utilisateur en cours
@@ -125,8 +175,11 @@ const actions = {
       .catch(function () {});
   },
 
-  //appel api sur le btn (creer un post) pour la creation d'un post
+  //appel api pour la creation d'un post
   btnCreatePost({ commit }) {
+    if (window.confirm("Veuillez valider votre publication ") != true) {
+      return;
+    }
     //recuperer le formulaire html
     const form = document.forms["createPostForm"];
     //rechercher l'id correspondant au selecteur
@@ -136,6 +189,7 @@ const actions = {
     formData.append("postTitre", form.postTitre.value);
     formData.append("postDescription", form.postDescription.value);
     formData.append("postImgUrl", myFiles.files[0]);
+
     //recuperer le token de l'utilisateur depuis le local storage
     const token = JSON.parse(localStorage.getItem("user")).token;
     //appel api pour la creation du post
@@ -146,17 +200,15 @@ const actions = {
         },
       })
       .then((response) => {
-        console.log(response.data);
         commit("LOG_NEWPOST", response.data);
-        //window.location.reload();
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
       });
   },
 
-  //appel api pour recuperer le post dans la page ThisPost
-  //parametre de l'id (idRoute) en second parametre de l'api
+  //appel api pour recuperer le post
   getThisPost({ commit }, idRoute) {
     const token = JSON.parse(localStorage.getItem("user")).token;
     instance
@@ -166,11 +218,92 @@ const actions = {
         },
       })
       .then((response) => {
-        //console.log("resultat avec idRoute en parametre (id de ThisPost.vue)", response.data);
-        if(response.data.length>0)
-        {
+        if (response.data.length > 0) {
           commit("GET_THISPOST", response.data[0]);
         }
+      })
+      .catch(function () {});
+  },
+
+  //appel api sur le btn (publier un com) pour la creation d'un com
+  btnCreateComment({ commit }, commentBody) {
+    if (window.confirm("Voulez vous valider ce commentaire ?") != true) {
+      return;
+    }
+    instance
+      .post("comments", commentBody)
+      .then((response) => {
+        commit("LOG_NEWCOMMENT", response.data);
+        location.reload();
+      })
+      .catch((error) => console.log(error));
+  },
+
+  //appel api de tt les comments
+  getAllCom({ commit }, idRoute) {
+    instance
+      .get("/comments/" + idRoute)
+      .then((response) => {
+        commit("GET_ALL_COM", response.data);
+      })
+      .catch(function () {});
+  },
+
+  //appel api suppression des coms
+  deleteComment({ commit }, idCom) {
+    if (window.confirm("Voulez vous supprimer ce commentaire ?") != true) {
+      return;
+    }
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    instance
+      .delete("/comments/" + idCom, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => {
+        commit("DELETE_THISCOM", response.data);
+        location.reload();
+      })
+      .catch(function () {});
+  },
+
+  //appel api suppression d'un posts
+  DeletePost({ commit }, id_post) {
+    if (
+      window.confirm(
+        "Cette publication et tous les commentaires associés seront supprimés "
+      ) != true
+    ) {
+      return;
+    }
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    instance
+      .delete("/posts/" + id_post, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        commit("DELETE_THISPOST", response.data);
+        location.reload();
+      })
+      .catch(function () {});
+  },
+
+  //appel api creation de like
+  btnPostLike({ commit }, idPost) {
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    instance
+      .post(`/posts/${idPost}/like`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => {
+        commit("POST_LIKE", response.data);
+        location.reload();
       })
       .catch(function () {});
   },

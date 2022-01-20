@@ -1,0 +1,59 @@
+/*style desktop du footer general*/
+.homeFooterBloc {
+  font-family: Arial, Helvetica, sans-serif;
+  max-width: 1440px;
+  margin: 0 auto;
+  height: auto;
+}
+.footerBloc {
+  background-color: white;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  max-width: 1440px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.footerOne {
+  padding: 20px 10px;
+  width: 45%;
+}
+.footerTwo {
+  padding: 20px 10px;
+  width: 45%;
+}
+.footerText {
+  cursor: pointer;
+  padding: 5px;
+}
+.footerText:hover {
+  color: #8e44ad;
+}
+@media screen and (max-width: 920px) {
+  .homeFooterBloc{
+    width: 100%;
+    height: auto;
+  }
+  .footerBloc {
+    flex-direction: column;
+    color: #a3a3a3;
+    width: 100%;
+    height: auto;
+  }
+  .footerOne,
+  .footerTwo {
+    width: 100%;
+  }
+  .footerOne {
+    padding-bottom: 0;
+  }
+  .footerTwo {
+    padding-top: 0;
+  }
+  .footerText:nth-child(2){
+    margin-bottom: 0;
+  }
+}
