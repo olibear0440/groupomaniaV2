@@ -27,7 +27,7 @@
 }
 .formBloc {
   padding: 5px;
-  width: 100%;
+  width: auto;
 }
 .formControl {
   display: flex;
@@ -75,5 +75,13 @@ textarea {
   font-family: inherit;
   cursor: pointer;
 }
-@media screen and (max-width: 720px) {
+@media screen and (min-width: 375px) and (max-width: 720px) {
+  .myPostTitle{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .myPostMsg{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }

@@ -4,11 +4,11 @@
       <BackToPost />
       <div class="onePost">
         <div class="postsTitle">
-          <h2>Le post</h2>
+          <h2>Commenter cette publication</h2>
         </div>
         <div class="usersPosts">
           <div class="postsUsersInfos">
-            <p>{{ thisPost.usersEmail }}</p>
+            <p>posté par : {{ thisPost.usersEmail }}</p>
             <p>{{ renderDate(thisPost.postDate) }}</p>
           </div>
           <div class="postsInfos">
@@ -29,7 +29,7 @@
     <div class="commentBloc">
       <div class="myCommentBloc">
         <div class="myCommentTitle">
-          <h2>Messages</h2>
+          <h2>Votre message</h2>
         </div>
         <div class="myCommentMsg">
           <form
@@ -109,8 +109,9 @@ export default {
   },
   methods: {
     btnLogout() {
-      this.$store.commit("btnLogout");
-      this.$router.push("/");
+       this.$store.commit("btnLogout");
+       this.$router.push("/");
+       
     },
     renderDate(postDate) {
       const d = new Date(postDate);

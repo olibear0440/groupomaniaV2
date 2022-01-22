@@ -4,6 +4,7 @@ import Register from "../views/Register.vue";
 import Posts from "../views/Posts.vue";
 import Mypost from "../views/Mypost.vue";
 import ThisPost from "../views/ThisPost.vue"
+import Users from "../views/Users.vue"
 
 const routes = [
   {
@@ -15,6 +16,11 @@ const routes = [
     path: "/Register",
     name: "Register",
     component: Register,
+  },
+  {
+    path: "/users",
+    name: "users",
+    component: Users,
   },
   {
     path: "/Posts",

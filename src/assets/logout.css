@@ -1,6 +1,6 @@
 .navLogoutBloc {
-  margin: 0 auto;
-  max-width: 1440px;
+  text-align: center;
+  width: 100%;
   height: auto;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -28,7 +28,7 @@
   color: #8e44ad;
 }
 
-@media screen and (max-width: 920px) {
+@media screen and (min-width: 375px) and (max-width: 720px) {
   .logoutBloc {
     display: flex;
     flex-direction: column;

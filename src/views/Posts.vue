@@ -1,6 +1,16 @@
 <template>
   <div class="postBloc">
     <Logout />
+    <div class="adminBloc" v-if="currentUser.userRole == 1">
+      <div class="adminBlocTitre">
+        <h2>Accès administrateur</h2>
+      </div>
+      <div class="userProfilBloc">
+        <button class="btnShowUsers" @click="btnShowUsers()">
+          Comptes utilisateurs
+        </button>
+      </div>
+    </div>
     <div class="myProfil">
       <div class="myProfilTitle">
         <h2>Mon profil</h2>
@@ -53,11 +63,11 @@
     </div>
     <div class="allThePosts">
       <div class="postsTitle">
-        <h2>Les derniers posts</h2>
+        <h2>Les dernieres publications</h2>
       </div>
       <div class="usersPosts" v-for="post in allPosts" :key="post.id">
         <div class="postsUsersInfos">
-          <p>Publié par : {{ post.usersEmail }}</p>
+          <p>Posté par : {{ post.usersEmail }}</p>
           <p>{{ renderDate(post.postDate) }}</p>
         </div>
         <div class="postsInfos">
@@ -146,8 +156,10 @@ export default {
     btnCreateMyPost() {
       this.$router.push("/Mypost");
     },
+    btnShowUsers() {
+      this.$router.push("/Users");
+    },
     btnPostLike(idPost) {
-      //console.log("result de idPost dans posts.vue==>", idPost)
       this.$store.dispatch("btnPostLike", idPost);
     },
     btnDeletePost(id_post) {

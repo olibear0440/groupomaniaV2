@@ -29,14 +29,15 @@ const state = {
   status: "",
   user: user,
   currentUser: [],
+  allUsers: [],
   allPosts: [],
   allCom: [],
   file: "",
   thisPost: [],
+  deleteUser: [],
   deleteThisCom: [],
   deleteThisPost: [],
   postLike: [],
-  //updateMdp: "",
 };
 
 const mutations = {
@@ -63,6 +64,9 @@ const mutations = {
   CURRENT_USER(state, currentUser) {
     state.currentUser = currentUser;
   },
+  GET_ALL_USERS(state, allUsers) {
+    state.allUsers = allUsers;
+  },
   GET_ALL_POSTS(state, allPosts) {
     state.allPosts = allPosts;
   },
@@ -71,6 +75,9 @@ const mutations = {
   },
   GET_THISPOST(state, thisPost) {
     state.thisPost = thisPost;
+  },
+  DELETE_USER(state, deleteUser) {
+    state.deleteUser = deleteUser;
   },
   DELETE_THISCOM(state, deleteThisCom) {
     state.deleteThisCom = deleteThisCom;
@@ -131,8 +138,9 @@ const actions = {
   //appel api pour le changement de mot de passe
   btnChangeMdp({ commit }) {
     if (
-      window.confirm("Veuillez noter votre nouveau mot de passe avant de valider") !=
-      true
+      window.confirm(
+        "Veuillez noter votre nouveau mot de passe avant de valider"
+      ) != true
     ) {
       return;
     }
@@ -161,6 +169,15 @@ const actions = {
       .get("/users/currentUser")
       .then((response) => {
         commit("CURRENT_USER", response.data);
+      })
+      .catch(function () {});
+  },
+  //appel api pour afficher la liste de tt les utilisateurs
+  getAllUsers({ commit }) {
+    instance
+      .get("/users")
+      .then((response) => {
+        commit("GET_ALL_USERS", response.data);
       })
       .catch(function () {});
   },
@@ -245,6 +262,26 @@ const actions = {
       .get("/comments/" + idRoute)
       .then((response) => {
         commit("GET_ALL_COM", response.data);
+      })
+      .catch(function () {});
+  },
+
+  //appel api suppression d'un utilisateur
+  DeleteUser({ commit }, id_user) {
+    if (window.confirm("Cet utilisateur va être supprimé !") != true) {
+      return;
+    }
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    instance
+      .delete("/users/" + id_user, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        commit("DELETE_USER", response.data);
+        location.reload();
       })
       .catch(function () {});
   },

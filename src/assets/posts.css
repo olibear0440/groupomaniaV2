@@ -70,7 +70,8 @@ h1 {
   justify-content: center;
   align-items: stretch;
 }
-#currentPassword, #newPassword{
+#currentPassword,
+#newPassword {
   border: 2px solid #f0f0f0;
   border-radius: 4px;
   font-family: inherit;
@@ -78,7 +79,7 @@ h1 {
   padding: 10px;
   width: auto;
 }
-#currentPassword{
+#currentPassword {
   margin-bottom: 5px;
 }
 .btnForm {
@@ -86,7 +87,7 @@ h1 {
   width: 100%;
   height: auto;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
 }
 #btnProfilPassword {
@@ -126,6 +127,38 @@ h1 {
   font-family: inherit;
   cursor: pointer;
 }
+.adminBlocTitre {
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 20px 30px;
+}
+h2 {
+  margin: 0;
+}
+.adminBloc {
+  background-color: white;
+  width: 100%;
+  margin-bottom: 10px;
+  height: 120px;
+  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+.userProfilBloc {
+  padding: 0px 30px;
+  background-color: white;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.btnShowUsers {
+  border: 1px solid #cecece;
+  border-radius: 4px;
+  padding: 5px;
+  margin: 10px 0px 10px 5px;
+  cursor: pointer;
+}
 .allThePosts {
   background-color: white;
   border-radius: 5px;
@@ -144,6 +177,8 @@ h1 {
 .usersPosts {
   padding: 10px 30px;
   background-color: white;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .postsUsersInfos {
@@ -151,8 +186,7 @@ h1 {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  padding: 5px;
+  width: auto;
   font-size: 16px;
   font-family: Arial, Helvetica, sans-serif;
   color: gray;
@@ -168,14 +202,14 @@ h1 {
 }
 .title {
   text-align: start;
-  width: 100%;
+  width: auto;
   font-weight: bold;
   font-size: 1.5em;
   margin: 0;
 }
 .description {
   text-align: start;
-  width: 100%;
+  width: auto;
   color: #8e44ad;
 }
 .blocImg {
@@ -245,24 +279,34 @@ p.commentNbr {
   margin: 5px 0px 5px 40px;
   cursor: pointer;
 }
-@media screen and (max-width: 720px) {
+@media screen and (min-width: 375px) and (max-width: 720px) {
   .myProfil {
     margin-bottom: 5px;
+    height: auto;
   }
   .myProfilBloc {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .myProfilTitle {
+    padding-left: 10px;
+    padding-right: 10px;
   }
   .profilInfos,
   .profilPassword {
     width: 100%;
     align-items: center;
   }
-  .btnForm{
+  .btnForm {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  #btnProfilPassword {
+    width: 100%;
   }
   .formChangeMdp {
     padding: 0;
@@ -273,16 +317,30 @@ p.commentNbr {
   #updateMdpError {
     padding: 0;
   }
-  .btnCreatePost{
+  .btnCreatePost {
     width: 100%;
   }
+  .postsTitle {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
   .usersPosts {
-    padding: 10px 30px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
-  .postFooterInfos{
+  .postsUsersInfos {
+    font-size: 14px;
+  }
+  
+  .postFooterInfos {
     width: auto;
   }
-  .likeIcon, .linkBtnComment{
+  .likeIcon,
+  .linkBtnComment {
     width: auto;
+  }
+  .userProfilBloc {
+    justify-content: center;
+    height: auto;
   }
 }

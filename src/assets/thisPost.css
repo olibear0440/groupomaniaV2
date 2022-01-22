@@ -11,10 +11,12 @@
   align-items: center;
   width: 100%;
   height: auto;
+  
 }
 .onePost {
   margin-bottom: 5px;
   width: 100%;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 30%);
 }
 
 .postsImg {
@@ -26,7 +28,7 @@
 .postsInfos {
   border-bottom: 2px solid rgba(253, 41, 1);
   padding: 5px;
-  width: 100%;
+  width: auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -36,7 +38,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: auto;
   padding: 5px;
   font-size: 16px;
   font-family: Arial, Helvetica, sans-serif;
@@ -69,7 +71,7 @@ p {
 }
 .formBloc {
   margin-bottom: 20px;
-  width: 100%;
+  width: auto;
 }
 .formControlComment {
   display: flex;
@@ -93,7 +95,7 @@ p {
 }
 .btnCommentBloc {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   padding: 0px 5px 5px 0px;
 }
 .confirmComment {
@@ -149,4 +151,13 @@ p {
 .msgComStyle {
   margin: 5px 0px;
   font-family: cursive;
+}
+@media screen and (min-width: 375px) and (max-width: 720px){
+  .myCommentTitle, .myCommentMsg{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .deleteComment{
+    margin: 10px;
+  }
 }
