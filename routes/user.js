@@ -1,30 +1,23 @@
-//import package
 const express = require("express");
-
-//fonction de router
 const router = express.Router();
-
-//import du controllers
-
 const auth = require("../middleware/auth");
 const userCtrl = require("../controllers/user");
 
-//les routes users
-/*router.post("/", auth, userCtrl.createUser);*/
+/*
+    * routes:
+        renvois tous les utilisateurs
+        renvoi l'utilisateur de la session par son token
+        renvoi un utilisateur par son ID
+        supprimer un utilisateur
+        modifier le mdp d'un utilisateur
 
-//recuperer tous les utilisateurs
+    * protection des routes par middleware d'authentification
+*/
+
 router.get("/", auth, userCtrl.getUsers);
-
-//recuperer l'utilisateur en cours de la session
 router.get("/currentUser", auth, userCtrl.getCurrentUser);
-
-//recuperer un utilisateur
 router.get("/:id", auth, userCtrl.getOneUser);
-
-//supprimer un utilisateur
 router.delete("/:id", auth, userCtrl.deleteUser);
-
-//modifier le mot de passe utilisateur
 router.put("/", auth, userCtrl.updateUser);
 
 module.exports = router;

@@ -1,12 +1,13 @@
-//import base de donnée
 const database = require("../sqlconnection");
-
-//import package
 const jwt = require("jsonwebtoken");
-//import variable d'environnement
 require("dotenv").config();
 
-// Protéger les routes et vérifier que l'utilisateur est authentifié
+/*
+  * Protéger les routes et vérifier que l'utilisateur est authentifié
+
+  * utilisation package jsonwebtoken
+  * utilisation variable d'environnement dotenv
+*/
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];

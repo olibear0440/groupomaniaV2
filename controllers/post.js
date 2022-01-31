@@ -1,9 +1,15 @@
 const database = require("../sqlconnection");
 const fs = require("fs");
-//import package de token
 const jwt = require("jsonwebtoken");
 
-//Afficher tt les posts
+/*
+  * Renvoi toutes les publications
+    le nbre de commentaires et
+    le nbre de j'aime associés à chaque publication
+
+  * utilisation package jsonwebtoken
+  * utilisation package dotenv
+*/
 exports.getPosts = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
   const userId = jwt.decode(token, process.env.JWT_KEY).userId;
@@ -20,15 +26,18 @@ exports.getPosts = (req, res, next) => {
     (err, rows, fields) => {
       if (!err) res.send(rows);
       else {
-        return res
-          .status(400)
-          .json({ error: "impossible d'afficher tous les post !" + err });
+        return res.status(400).json({
+          error: "impossible d'afficher toutes les publications !" + err,
+        });
       }
     }
   );
 };
 
-//afficher un post avec id
+/*
+  Renvoie une publication et
+  le nbre de commentaires associés à la publication
+*/
 exports.getOnePost = (req, res, next) => {
   database.query(
     "SELECT a.*, b.firstname, b.lastname, b.email as usersEmail, ifnull(c.comCount, 0) as comCount " +
@@ -40,14 +49,16 @@ exports.getOnePost = (req, res, next) => {
     (err, rows, fields) => {
       if (!err) res.send(rows);
       else
-        return res
-          .status(400)
-          .json({ message: " error : impossible d'afficher ce post" });
+        return res.status(400).json({
+          message: " error : impossible d'afficher cette publication !",
+        });
     }
   );
 };
 
-//creer et enregistrer un post
+/*
+  creer et enregistrer une publication
+*/
 exports.createPost = (req, res, next) => {
   const postTitre = req.body.postTitre;
   const postDescription = req.body.postDescription;
@@ -65,7 +76,7 @@ exports.createPost = (req, res, next) => {
   database.query(query, postArray, (err, rows, fields) => {
     if (!err)
       return res.status(201).json({
-        message: "Post créé dans la base de donnée",
+        message: "Publication créé dans la base de donnée",
       });
     else {
       return res.status(401).json({ message: "error: " + err });
@@ -73,30 +84,29 @@ exports.createPost = (req, res, next) => {
   });
 };
 
-//supprimer les likes, les commentaires et le post ( + fichier)
+/*
+  supprimer une publication
+  les j'aime et 
+  les commentaires associés
+ */
 exports.deletePost = (req, res, next) => {
-  //recuperer le parametre id
   const urlPostId = req.params.id;
-  //supprimer les comments et likes en joignant les tables respectives
   const query =
     "DELETE likes, comments " +
     "FROM likes " +
     "INNER JOIN comments " +
     "ON comments.post_id = likes.post_id " +
-    "WHERE likes.post_id = " +
-    urlPostId;
-  database.query(query, null, (err, results, fields) => {
+    "WHERE likes.post_id = ?";
+  database.query(query, [urlPostId], (err, results, fields) => {
     if (err) {
       return res.status(400).json({
         message:
           " error : impossible de supprimer les likes et les commentaires",
       });
-    }
-    //si pas d'erreur selectionner le post par l'id...
-    else {
+    } else {
       database.query(
         "SELECT * FROM posts WHERE id = ?",
-        [req.params.id],
+        [urlPostId],
         (err, rows, fields) => {
           //Verifier qu'il n'y a bien qu'un seul post (pas plus de 1 ni rien)
           if (rows.length != 1) {
@@ -108,16 +118,18 @@ exports.deletePost = (req, res, next) => {
             //...suppression du fichier avec la methode fs.unlink
             fs.unlinkSync(`images/${filename}`);
           }
-          //...puis suppression du post
+          //...puis suppression de la publication
           database.query(
             "DELETE FROM posts WHERE id = ?",
-            [req.params.id],
+            [urlPostId],
             (err, rows, fields) => {
               if (!err) {
-                res.send("Post supprimé !");
+                return res.status(201).json({
+                  message: "Publication supprimée !",
+                });
               } else {
                 return res.status(400).json({
-                  message: " error : impossible de supprimer le post",
+                  message: " error : impossible de supprimer la publication",
                 });
               }
             }
@@ -128,44 +140,48 @@ exports.deletePost = (req, res, next) => {
   });
 };
 
-//fonction de like et unlike d'un post
+/*
+  * Implémenter et 
+    retirer un j'aime sur une publication
+
+  * utilisation package jsonwebtoken
+  * utilisation package dotenv
+*/
 exports.postLike = (req, res, next) => {
   const urlPostId = req.params.id;
   const token = req.headers.authorization.split(" ")[1];
   const userId = jwt.decode(token, process.env.JWT_KEY).userId;
-
-  //Recuperer le like correspondant à l'user et au post
-  const query =
-    "SELECT * from likes WHERE post_id = " +
-    urlPostId +
-    " AND  user_Id = " +
-    userId;
-  database.query(query, null, (err, results, fields) => {
+  const likeArray = [urlPostId, userId];
+  //Renvoi le j'aime correspondant à l'user et à la publication
+  const query = "SELECT * from likes WHERE post_id = ? AND user_Id = ?";
+  database.query(query, likeArray, (err, results, fields) => {
     if (err) return res.status(401).json({ message: "error: " + err });
-
-    //S'il n'ya pas de like correspondant au user et au post...
+    //Si pas de j'aime correspondant au user et à la publication...
     if (results.length == 0) {
-      //...Alors ajouter un like
-      const query =
-        "INSERT INTO likes (post_id, user_id) " +
-        "SELECT " +
-        urlPostId +
-        ", " +
-        userId;
-      database.query(query, null, (err, results, fields) => {
-        if (!err) res.send("post liké");
-        else return res.status(400).json({ message: "post non liké" });
+      //...Alors ajouter un j'aime
+      const query = "INSERT INTO likes (post_id, user_id) VALUE (?, ?)";
+      database.query(query, likeArray, (err, results, fields) => {
+        if (!err)
+          return res.status(201).json({
+            message: "Vous avez aimé cette publication !",
+          });
+        else
+          return res
+            .status(400)
+            .json({ message: "j'aime non effectué sur la publication" });
       });
     } else {
-      //...Sinon retiré le like déjà présent
-      const query =
-        "DELETE from likes WHERE post_id = " +
-        urlPostId +
-        " AND user_id = " +
-        userId;
-      database.query(query, null, (err, results, fields) => {
-        if (!err) res.send("like retiré");
-        else return res.status(400).json({ message: "post toujours liké" });
+      //...Sinon retiré le j'aime déjà présent
+      const query = "DELETE from likes WHERE post_id = ? AND user_id = ?";
+      database.query(query, likeArray, (err, results, fields) => {
+        if (!err)
+          return res.status(201).json({
+            message: "j'aime retiré de cette publication !",
+          });
+        else
+          return res
+            .status(400)
+            .json({ message: "j'aime non retiré de la publication" });
       });
     }
   });

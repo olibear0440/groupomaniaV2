@@ -1,9 +1,13 @@
 const database = require("../sqlconnection");
+const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const passwordSchema = require("../passwordValidate");
 require("dotenv").config();
 
-//Afficher tous les utilisateurs
+/*
+  Renvoi les utilisateurs
+*/
 exports.getUsers = (req, res, next) => {
   database.query("SELECT * FROM users", (err, rows, fields) => {
     if (!err) res.send(rows);
@@ -14,7 +18,9 @@ exports.getUsers = (req, res, next) => {
   });
 };
 
-//afficher un utilisateur
+/*
+  Renvoi un utilisateur par son ID
+*/
 exports.getOneUser = (req, res, next) => {
   database.query(
     "SELECT * FROM users WHERE id = ?",
@@ -37,11 +43,13 @@ exports.getOneUser = (req, res, next) => {
   );
 };
 
-//appel de l'utilisateur de la session
+/*
+  Renvoi à l'utilisateur de la session par son token
+*/
 exports.getCurrentUser = (req, res, next) => {
   const authToken = req.headers.authorization.split(" ")[1];
-  const query = "SELECT * FROM users WHERE token = '" + authToken + "'";
-  database.query(query, (err, rows, fields) => {
+  const query = "SELECT * FROM users WHERE token = ?";
+  database.query(query, [authToken], (err, rows, fields) => {
     if (!err) {
       if (rows.length !== 1) {
         res.status(401).json({ error: "Utilisateur non trouvé !" });
@@ -53,23 +61,79 @@ exports.getCurrentUser = (req, res, next) => {
   });
 };
 
-//supprimer un utilisateur
+/*
+  Supprimer un utilisateur, 
+  ses j'aimes,
+  ses commentaires et
+  ses publications 
+*/
 exports.deleteUser = (req, res, next) => {
-  database.query(
-    "DELETE FROM users WHERE id = ?",
-    [req.params.id],
-    (err, rows, fields) => {
-      if (!err) res.send("Utilisateur supprimé !");
-      //console.log(err);
-      else
-        return res
-          .status(400)
-          .json({ message: " error : impossible de supprimer l'utilisateur" });
+  const user_id = req.params.id;
+  //supprimer les j'aimes liés à l'user
+  const query = "DELETE from likes WHERE user_id = ?";
+  database.query(query, [user_id], (err, rows, fields) => {
+    if (err) {
+      res.status(400).json({
+        message:
+          "error : impossible de supprimer les j'aimes de cet utilisateur",
+      });
     }
-  );
+    //si pas d'erreur, supprimer les commentaires liés à l'user
+    const query = "DELETE from comments WHERE user_id = ?";
+    database.query(query, [user_id], (err, rows, fields) => {
+      if (err) {
+        res.status(400).json({
+          message:
+            "error : impossible de supprimer les commentaires de cet utilisateur",
+        });
+      }
+      //si pas d'erreur, renvois les publications liées à l'user...
+      const query = "SELECT * FROM posts WHERE user_id = ?";
+      database.query(query, [req.params.id], (err, rows, fields) => {
+        rows.forEach((row) => {
+          if (row.postImgUrl) {
+            //Renvoi le fichier s'il y en a un...
+            const filename = row.postImgUrl.split("/images/")[1];
+            //...suppression du fichier avec la methode fs.unlink
+            fs.unlinkSync(`images/${filename}`);
+          }
+        });
+        //...suppression des publications liées à l'user
+        const query = "DELETE FROM posts WHERE user_id = ?";
+        database.query(query, [user_id], (err, rows, fields) => {
+          if (err) {
+            res.status(400).json({
+              message:
+                " error : impossible de supprimer la publication de cet utilisateur",
+            });
+          }
+          //si pas d'erreur, supprimer le user
+          const query = "DELETE FROM users WHERE id = ?";
+          database.query(query, [user_id], (err, rows, fields) => {
+            if (err) {
+              res.status(400).json({
+                message: " error : impossible de supprimer cet utilisateur",
+              });
+            } else {
+              return res
+                .status(200)
+                .json({ message: "Cet utilisateur est supprimé !" });
+            }
+          });
+        });
+      });
+    });
+  });
 };
 
-//modifier le mot de passe de l'utilisateur
+/*
+ * modifier le mot de passe de l'utilisateur
+
+ * utilisation package jsonwebtoken
+ * utilisation package dotenv
+ * utiliation package bcrypt
+ * utilisation package password-validator
+ */
 exports.updateUser = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
   const userId = jwt.decode(token, process.env.JWT_KEY).userId;
@@ -82,32 +146,40 @@ exports.updateUser = (req, res, next) => {
       if (results.length !== 1) {
         return res.status(401).json({ error: "Utilisateur non trouvé !" });
       }
-      //si utilisateur trouvé on compare le password a la requete du frontEnd
+      //si utilisateur trouvé, compare le password à la requete du frontEnd
       bcrypt
         .compare(req.body.currentPassword, results[0].password)
         .then((valid) => {
           if (!valid) {
             return res.status(401).json({ error: "Mot de passe incorrect !" });
           }
-          //Si password reconnu, on crypte le nouveau mot de passe...
-          bcrypt
-            .hash(req.body.newPassword, 10)
-            .then((newPassword) => {
-              //...on passe la requete de modification du mot de passe
-              database.query(
-                "UPDATE users SET password=? WHERE id=?",
-                [newPassword, userId],
-                (err, rows, field) => {
-                  if (err) {
-                    return res.status(400).json(err);
+          if (!passwordSchema.validate(req.body.newPassword)) {
+            return res.status(400).json({
+              error:
+                "Nouveau mot de passe non valide :" +
+                passwordSchema.validate("req.body.newPassword", { list: true }),
+            });
+          } else {
+            bcrypt
+              .hash(req.body.newPassword, 10)
+              .then((newPassword) => {
+                database.query(
+                  "UPDATE users SET password=? WHERE id=?",
+                  [newPassword, userId],
+                  (err, rows, field) => {
+                    if (err) {
+                      return res.status(400).json({
+                        error: "mot de passe utilisateur non modifié" + err,
+                      });
+                    }
+                    return res
+                      .status(201)
+                      .json({ message: "mot de passe utilisateur modifié !" });
                   }
-                  return res
-                    .status(201)
-                    .json({ message: "mot de passe utilisateur modifié !" });
-                }
-              );
-            })
-            .catch((error) => res.status(501).json({ error }));
+                );
+              })
+              .catch((error) => res.status(501).json({ error }));
+          }
         })
         .catch((error) => res.status(501).json({ error }));
     }

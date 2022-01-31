@@ -1,6 +1,8 @@
 const database = require("../sqlconnection");
 
-//afficher les commentaires d'un post
+/*
+  Renvoi les commentaires d'une publication
+*/
 exports.getPostComments = (req, res, next) => {
   database.query(
     "SELECT a.*, b.lastname, b.email " +
@@ -12,12 +14,14 @@ exports.getPostComments = (req, res, next) => {
       else
         return res
           .status(400)
-          .json({ error: "impossible d'afficher tous les commentaires !" });
+          .json({ error: "Impossible d'afficher tous les commentaires !" });
     }
   );
 };
 
-//creer et enregistrer un commentaire
+/*
+  Creer et enregistrer un commentaire
+*/
 exports.createComment = (req, res, next) => {
   const commentText = req.body.commentText;
   const post_id = req.body.post_id;
@@ -25,17 +29,11 @@ exports.createComment = (req, res, next) => {
   const commentArray = [commentText, post_id, token];
   const query =
     "INSERT INTO comments (commentText, commentDate, post_id, user_id)" +
-    "SELECT '" +
-    commentText +
-    "', NOW(), '" +
-    post_id +
-    "', id FROM users WHERE token = '" +
-    token +
-    "'";
+    "SELECT ?, NOW(), ?, id FROM users WHERE token = ?";
   database.query(query, commentArray, (err, rows, fields) => {
     if (!err)
       return res.status(201).json({
-        message: "commentaire enregistré dans la base de donnée",
+        message: "commentaire enregistré !",
       });
     else {
       return res.status(401).json({ message: "error:  " + err });
@@ -43,16 +41,21 @@ exports.createComment = (req, res, next) => {
   });
 };
 
-//supprimer un commentaire
+/*
+  Supprimer un commentaire
+*/
 exports.deleteComments = (req, res, next) => {
   database.query(
     "DELETE FROM comments WHERE id = ?",
     [req.params.id],
     (err, rows, fields) => {
-      if (!err) res.send("commentaire supprimé !");
+      if (!err)
+        return res.status(201).json({
+          message: "commentaire supprimé !",
+        });
       else
         return res.status(400).json({
-          message: " error : impossible de supprimer le commentaire",
+          message: " error : impossible de supprimer le commentaire !",
         });
     }
   );
