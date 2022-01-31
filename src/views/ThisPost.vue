@@ -11,7 +11,7 @@
             <p>posté par : {{ thisPost.usersEmail }}</p>
             <p>{{ renderDate(thisPost.postDate) }}</p>
           </div>
-          <div class="postsInfos">
+          <div class="thisPostsInfos">
             <p class="title">{{ thisPost.postTitre }}</p>
             <p class="description">{{ thisPost.postDescription }}</p>
             <div>
@@ -22,6 +22,10 @@
                 :src="thisPost.postImgUrl"
               />
             </div>
+          </div>
+          <div class="thisPostCommentsNbr">
+            <i class="fa fa-commenting-o fa-lg" aria-hidden="true"></i>
+            <p class="commentNbr">{{ thisPost.comCount }}</p>
           </div>
         </div>
       </div>
@@ -70,9 +74,9 @@
             <div class="userInfoCom">
               <p class="comMailStyle">{{ com.email }}</p>
               <p class="dateStyle">{{ renderDate(com.commentDate) }}</p>
-              <div class="comDelete">
+              <div class="comDelete" v-if="currentUser.userRole == 1">
                 <button class="deleteComment" @click="btnDeleteComment(com.id)">
-                  Supprimer
+                  Supprimer ce commentaire
                 </button>
               </div>
             </div>
@@ -97,21 +101,22 @@ export default {
   data: () => {
     return {
       com: "",
+      commentText: "",
     };
   },
   computed: {
-    ...mapState(["thisPost", "allCom"]),
+    ...mapState(["thisPost", "allCom", "currentUser"]),
   },
   mounted() {
     const idRoute = this.$route.params.id;
     this.$store.dispatch("getThisPost", idRoute);
     this.$store.dispatch("getAllCom", idRoute);
+    this.$store.dispatch("getCurrentUser");
   },
   methods: {
     btnLogout() {
-       this.$store.commit("btnLogout");
-       this.$router.push("/");
-       
+      this.$store.commit("btnLogout");
+      this.$router.push("/");
     },
     renderDate(postDate) {
       const d = new Date(postDate);

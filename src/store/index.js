@@ -267,8 +267,12 @@ const actions = {
   },
 
   //appel api suppression d'un utilisateur
-  DeleteUser({ commit }, id_user) {
-    if (window.confirm("Cet utilisateur va être supprimé !") != true) {
+  deleteUser({ commit }, id_user) {
+    if (
+      window.confirm(
+        "Cet utilisateur et toutes ses publications seront supprimés !"
+      ) != true
+    ) {
       return;
     }
     const token = JSON.parse(localStorage.getItem("user")).token;
@@ -288,7 +292,7 @@ const actions = {
 
   //appel api suppression des coms
   deleteComment({ commit }, idCom) {
-    if (window.confirm("Voulez vous supprimer ce commentaire ?") != true) {
+    if (window.confirm("Ce commentaire sera supprimé !") != true) {
       return;
     }
     const token = JSON.parse(localStorage.getItem("user")).token;

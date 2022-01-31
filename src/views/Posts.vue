@@ -67,8 +67,8 @@
       </div>
       <div class="usersPosts" v-for="post in allPosts" :key="post.id">
         <div class="postsUsersInfos">
-          <p>Posté par : {{ post.usersEmail }}</p>
-          <p>{{ renderDate(post.postDate) }}</p>
+          <p class="textMail">Posté par : {{ post.usersEmail }}</p>
+          <p class="textDate">{{ renderDate(post.postDate) }}</p>
         </div>
         <div class="postsInfos">
           <p class="title">{{ post.postTitre }}</p>
@@ -84,11 +84,13 @@
           <div class="postFooterInfos">
             <router-link class="linkBtnComment" :to="`/posts/${post.id}`">
               <div class="postComments">
+                <p>Commenter</p>
                 <i class="fa fa-commenting-o fa-lg" aria-hidden="true"></i>
                 <p class="commentNbr">{{ post.comCount }}</p>
               </div>
             </router-link>
             <div class="likeIcon" @click="btnPostLike(post.id)">
+              <p class="likeText">j'aime</p>
               <span
                 v-if="post.userLike != 1"
                 class="fa fa-thumbs-o-up fa-lg"
@@ -99,7 +101,7 @@
                 class="fa fa-thumbs-up fa-lg"
                 aria-hidden="true"
               ></span>
-              {{ post.likeCount }}
+              <p class="commentNbr">{{ post.likeCount }}</p>
             </div>
             <div class="postDelete" v-if="currentUser.userRole == 1">
               <button class="btnDeletePost" @click="btnDeletePost(post.id)">
@@ -144,9 +146,22 @@ export default {
       this.mode = "showLogResetMdp";
     },
     btnChangeMdp() {
+      document.getElementById("currentPassword").classList.remove("inputError");
+      document.getElementById("newPassword").classList.remove("inputError");
       const updateMdpError = document.getElementById("updateMdpError");
+      
+      //variable regexs[min 8 caractères et +, min 1 lettres majuscules, min 1 lettres minuscules, min 1 chiffre, caracteres speciaux acceptés]
+      const regexs = [/^.{8,}$/, /[A-Z]/, /[a-z]/, /\d/, /[@%#$^&*]/];
+
       updateMdpError.innerHTML = "";
-      if (!this.currentPassword || !this.newPassword) {
+      if (this.currentPassword == "") {
+        document.getElementById("currentPassword").classList.add("inputError");
+        updateMdpError.innerHTML = "Mot de passe actuel non valide"
+        return;
+      }
+
+      if (regexs.some((regex) => !regex.test(this.newPassword))) {
+        document.getElementById("newPassword").classList.add("inputError");
         updateMdpError.innerHTML =
           "Le mot de passe doit contenir 8 caractères minimum, une majuscule, une majuscule, un chiffre et un symbole";
         return;

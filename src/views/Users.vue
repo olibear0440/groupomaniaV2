@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     btnDeleteUser(id_user) {
-      this.$store.dispatch("DeleteUser", id_user);
+      this.$store.dispatch("deleteUser", id_user);
     },
   },
 };

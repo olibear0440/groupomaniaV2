@@ -2,7 +2,7 @@
 .homeLogoBloc {
   background-color: white;
   font-family: Arial, Helvetica, sans-serif;
-  max-width: 1440px;
+  width: auto;
   margin: 0 auto;
   height: auto;
 }
@@ -12,7 +12,7 @@
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  width: 100%;
+  width: auto;
   border-bottom: 10px solid #8e44ad;
   height: 600px;
   display: flex;

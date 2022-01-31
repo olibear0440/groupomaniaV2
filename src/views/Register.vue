@@ -65,7 +65,7 @@
             class="errorLogin"
             v-if="mode == 'createAccount' && status == 'error_create'"
           >
-            Adresse mail déjà utilisée
+            Adresse mail déjà utilisée ou mot de passe invalide
           </p>
 
           <button

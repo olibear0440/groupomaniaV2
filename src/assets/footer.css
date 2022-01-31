@@ -1,7 +1,7 @@
 /*style desktop du footer general*/
 .homeFooterBloc {
   font-family: Arial, Helvetica, sans-serif;
-  max-width: 1440px;
+  width: auto;
   margin: 0 auto;
   height: auto;
 }
@@ -10,7 +10,7 @@
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  max-width: 1440px;
+  width: auto;
   margin-bottom: 20px;
   display: flex;
   flex-direction: row;

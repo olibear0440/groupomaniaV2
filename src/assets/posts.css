@@ -115,6 +115,9 @@ h1 {
   border: 1px solid #cecece;
   border-radius: 3px;
 }
+.inputError{
+  background-color: #ffc0c0;
+}
 .btnCreatePost {
   background-color: #8e44ad;
   border: 1px solid #8e44ad;
@@ -187,9 +190,12 @@ h2 {
   justify-content: space-between;
   align-items: center;
   width: auto;
-  font-size: 16px;
   font-family: Arial, Helvetica, sans-serif;
   color: gray;
+}
+.textMail, .textDate{
+  font-size: 14px;
+
 }
 .postsInfos {
   border-bottom: 2px solid rgba(253, 45, 1);
@@ -227,6 +233,11 @@ h2 {
   text-decoration: none;
   color: black;
   font-size: 1em;
+  font-weight: lighter;
+  padding-left: 0;
+}
+.linkBtnComment:hover{
+  color: black;
 }
 .postComments {
   border: 1px solid #cecece;
@@ -236,7 +247,7 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  width: 45px;
+  width: auto;
 }
 p.commentNbr {
   margin: 0;
@@ -244,6 +255,9 @@ p.commentNbr {
 }
 .postComments:hover {
   background-color: #f7f7f7;
+}
+.fa-commenting-o{
+  padding: 5px;
 }
 .postFooterInfos {
   display: flex;
@@ -258,6 +272,10 @@ p.commentNbr {
   padding: 5px;
   margin: 5px 0px 5px 40px;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: auto;
 }
 .likeIcon:hover {
   background-color: #f7f7f7;
@@ -331,13 +349,26 @@ p.commentNbr {
   .postsUsersInfos {
     font-size: 14px;
   }
-  
+  .postComments, .likeIcon{
+    background-color: #f7f7f7;
+  }
+
   .postFooterInfos {
-    width: auto;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
   .likeIcon,
   .linkBtnComment {
     width: auto;
+    margin: 0;
+    align-items: center;
+  }
+  .postDelete{
+    width: 100%;
+  }
+  .btnDeletePost{
+    margin: 10px 0 0 0;
+    width: 100%;
   }
   .userProfilBloc {
     justify-content: center;
