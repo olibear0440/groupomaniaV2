@@ -4,8 +4,8 @@ const registerCtrl = require("../controllers/register");
 
 /*
     * routes:
-        creer un utilisateur
-        enregistrer un utilisateur existant
+        - creer un utilisateur
+        - enregistrer un utilisateur existant
 */
 
 router.post("/signup", registerCtrl.signup);

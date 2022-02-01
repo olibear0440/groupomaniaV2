@@ -6,11 +6,11 @@ const auth = require("../middleware/auth");
 
 /*
     * routes:
-        creer une publication
-        Ajouter et retirer un j'aime sur une publication
-        renvois toutes les publications
-        renvoi une publication
-        supprimer une publication
+        - creer une publication
+        - Ajouter et retirer un j'aime sur une publication
+        - renvois toutes les publications
+        - renvoi une publication
+        - supprimer une publication
 
     * protection des routes par middleware d'authentification
 */

@@ -22,14 +22,14 @@ const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 const commentRoutes = require("./routes/comment");
 
-//creation de l'application express
-const app = express();
-
 //fonction de limitation de requete
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
 });
+
+//creation de l'application express
+const app = express();
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -50,13 +50,14 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 
-app.use("/images", express.static(path.join(__dirname, "images")));
-
 //les routes
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/registers", registerRoutes);
 app.use("/comments", commentRoutes);
+
+//middleware dossier images
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 //export de l'application
 module.exports = app;
