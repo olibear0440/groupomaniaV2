@@ -112,16 +112,19 @@
         </div>
       </div>
     </div>
+    <Footer />
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import Footer from "@/components/Footer.vue";
 import Logout from "@/components/Logout.vue";
 export default {
   name: "Posts",
   components: {
     Logout,
+    Footer,
   },
   data: () => {
     return {
@@ -149,14 +152,20 @@ export default {
       document.getElementById("currentPassword").classList.remove("inputError");
       document.getElementById("newPassword").classList.remove("inputError");
       const updateMdpError = document.getElementById("updateMdpError");
-      
-      //variable regexs[min 8 caractères et +, min 1 lettres majuscules, min 1 lettres minuscules, min 1 chiffre, caracteres speciaux acceptés]
-      const regexs = [/^.{8,}$/, /[A-Z]/, /[a-z]/, /\d/, /[@%#$^&*]/];
+
+      //variable regexs
+      const regexs = [
+        /^.{8,}$/, //min 8 caractères 
+        /[A-Z]/, //min 1 lettres majuscules
+        /[a-z]/, //min 1 lettres minuscules
+        /\d/, //min 1 chiffre
+        /[@%#$^&*]/, //caracteres speciaux acceptés
+      ];
 
       updateMdpError.innerHTML = "";
       if (this.currentPassword == "") {
         document.getElementById("currentPassword").classList.add("inputError");
-        updateMdpError.innerHTML = "Mot de passe actuel non valide"
+        updateMdpError.innerHTML = "Mot de passe actuel non valide";
         return;
       }
 

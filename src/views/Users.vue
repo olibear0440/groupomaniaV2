@@ -16,16 +16,19 @@
         </div>
       </div>
     </div>
+    <Footer />
   </div>
 </template>
 
 <script>
 import BackToPost from "@/components/BackToPost.vue";
+import Footer from "@/components/Footer.vue";
 import { mapState } from "vuex";
 export default {
   name: "Users",
   components: {
     BackToPost,
+    Footer,
   },
   mounted() {
     this.$store.dispatch("getAllUsers");

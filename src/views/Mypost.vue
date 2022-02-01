@@ -52,15 +52,18 @@
         </form>
       </div>
     </div>
+    <Footer />
   </div>
 </template>
 
 <script>
 import BackToPost from "@/components/BackToPost.vue";
+import Footer from "@/components/Footer.vue";
 export default {
   name: "Mypost",
   components: {
     BackToPost,
+    Footer,
   },
   data: () => {
     return {

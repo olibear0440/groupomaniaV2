@@ -87,16 +87,19 @@
         </div>
       </div>
     </div>
+    <Footer />
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import BackToPost from "@/components/BackToPost.vue";
+import Footer from "@/components/Footer.vue";
 export default {
   name: "ThisPost",
   components: {
     BackToPost,
+    Footer,
   },
   data: () => {
     return {

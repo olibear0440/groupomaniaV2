@@ -1,4 +1,4 @@
-/* style de la page des posts */
+/* style de la page d'affichage des publications */
 
 p {
   margin-top: 5px;
@@ -8,7 +8,6 @@ h1 {
   text-align: center;
 }
 .postBloc {
-  font-family: Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,20 +15,24 @@ h1 {
   margin: 0 auto;
   max-width: 1000px;
 }
+
 .myProfil {
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   width: 100%;
   margin-bottom: 10px;
+  margin-top: 5px;
 }
 .myProfilTitle {
   background-color: #f7f7f7;
   border-bottom: 1px solid #f0f0f0;
   padding: 20px 30px;
 }
-.myProfilTitle h2 {
+.myProfilTitle {
   text-align: center;
+}
+.myProfilTitle h2 {
   margin: 0;
 }
 .myProfilBloc {
@@ -115,7 +118,7 @@ h1 {
   border: 1px solid #cecece;
   border-radius: 3px;
 }
-.inputError{
+.inputError {
   background-color: #ffc0c0;
 }
 .btnCreatePost {
@@ -135,16 +138,14 @@ h1 {
   border-bottom: 1px solid #f0f0f0;
   padding: 20px 30px;
 }
-h2 {
+.adminBlocTitre h2 {
   margin: 0;
 }
 .adminBloc {
-  background-color: white;
-  width: 100%;
-  margin-bottom: 10px;
   height: 120px;
-  box-shadow: 0 2px 5px rgb(0, 0, 0, 0.3);
-  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  width: 100%;
 }
 .userProfilBloc {
   padding: 0px 30px;
@@ -164,10 +165,8 @@ h2 {
 }
 .allThePosts {
   background-color: white;
-  border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   width: 100%;
-  margin-bottom: 20px;
 }
 .postsTitle {
   background-color: #f7f7f7;
@@ -185,17 +184,11 @@ h2 {
 }
 
 .postsUsersInfos {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: auto;
-  font-family: Arial, Helvetica, sans-serif;
   color: gray;
 }
-.textMail, .textDate{
+.textMail,
+.textDate {
   font-size: 14px;
-
 }
 .postsInfos {
   border-bottom: 2px solid rgba(253, 45, 1);
@@ -236,7 +229,7 @@ h2 {
   font-weight: lighter;
   padding-left: 0;
 }
-.linkBtnComment:hover{
+.linkBtnComment:hover {
   color: black;
 }
 .postComments {
@@ -249,16 +242,10 @@ h2 {
   align-items: baseline;
   width: auto;
 }
-p.commentNbr {
-  margin: 0;
-  font-weight: normal;
-}
 .postComments:hover {
   background-color: #f7f7f7;
 }
-.fa-commenting-o{
-  padding: 5px;
-}
+
 .postFooterInfos {
   display: flex;
   flex-direction: row;
@@ -299,7 +286,6 @@ p.commentNbr {
 }
 @media screen and (min-width: 375px) and (max-width: 720px) {
   .myProfil {
-    margin-bottom: 5px;
     height: auto;
   }
   .myProfilBloc {
@@ -346,10 +332,11 @@ p.commentNbr {
     padding-left: 10px;
     padding-right: 10px;
   }
-  .postsUsersInfos {
-    font-size: 14px;
+  .textMail {
+    width: 50%;
   }
-  .postComments, .likeIcon{
+  .postComments,
+  .likeIcon {
     background-color: #f7f7f7;
   }
 
@@ -363,10 +350,10 @@ p.commentNbr {
     margin: 0;
     align-items: center;
   }
-  .postDelete{
+  .postDelete {
     width: 100%;
   }
-  .btnDeletePost{
+  .btnDeletePost {
     margin: 10px 0 0 0;
     width: 100%;
   }

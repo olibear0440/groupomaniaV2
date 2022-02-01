@@ -1,29 +1,30 @@
-/*style desktop du footer general*/
-.homeFooterBloc {
-  font-family: Arial, Helvetica, sans-serif;
-  width: auto;
-  margin: 0 auto;
-  height: auto;
+/*style du pied de page accueil intranet*/
+
+.homeFooterBloc{
+  padding-left: 30px;
+  padding-right: 30px;
 }
 .footerBloc {
-  background-color: white;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   width: auto;
   margin-bottom: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  font-weight: bold;
+  color: #a3a3a3;
+  font-size: 1.2em;
 }
 .footerOne {
   padding: 20px 10px;
-  width: 45%;
+  width: 30%;
 }
 .footerTwo {
   padding: 20px 10px;
-  width: 45%;
+  width: 30%;
+}
+.footerThree{
+  padding: 20px 10px;
+  width: 30%;
 }
 .footerText {
   cursor: pointer;
@@ -36,6 +37,8 @@
   .homeFooterBloc{
     width: 100%;
     height: auto;
+    padding: 0px;
+    margin-top: 10px;
   }
   .footerBloc {
     flex-direction: column;
@@ -44,14 +47,17 @@
     height: auto;
   }
   .footerOne,
-  .footerTwo {
+  .footerTwo, .footerThree {
     width: 100%;
   }
   .footerOne {
-    padding-bottom: 0;
+    padding: 0;
   }
   .footerTwo {
-    padding-top: 0;
+    padding: 0;
+  }
+  .footerThree{
+    padding: 0;
   }
   .footerText:nth-child(2){
     margin-bottom: 0;

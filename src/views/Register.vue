@@ -26,6 +26,7 @@
               placeholder="Nom"
               id="firstname"
               name="firstname"
+              aria-required="true"
               required
             /><br />
             <input
@@ -34,6 +35,7 @@
               placeholder="Prénom"
               id="lastname"
               name="lastname"
+              aria-required="true"
               required
             /><br />
           </div>
@@ -44,6 +46,7 @@
             placeholder="Email"
             id="email"
             name="email"
+            aria-required="true"
             required
           /><br />
           <input
@@ -52,6 +55,7 @@
             placeholder="Mot de passe"
             id="password"
             name="password"
+            aria-required="true"
             required
           /><br />
           <p
