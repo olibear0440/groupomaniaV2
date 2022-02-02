@@ -1,0 +1,116 @@
+FORMAT: 1A
+HOST: http://localhost:3000/
+
+# Groupomania_OB_social network API
+
+Cet API est un réseau social d'entreprise.    
+L'utilisateur creer son profil, se connecte à son espace et peut publier du texte et du contenu multimédia.    
+Il peut également liker et commenter les publications d'autres utilisateurs.
+
+## Utilisateur [registers/login]
+
+### Login [POST]
+
+Vous devez d'abord creer un compte en enregistrant votre profil.    
+Le password doit comporter minimum 8 lettres, 1 majuscules, 1 minuscule, 1 chiffre et un symbole.
+
++ Request (application/json)
+
+    + body  
+
+        {  
+            "email": "bradPitt@gmail.com",  
+            "password": "Bradpitt1234@"  
+        }  
+        
++ Response 200 (application/json)  
+
+        {  
+            "userId": 251,  
+            "firstname": "pitt",  
+            "lastname": "brad",  
+            "email": "bradPitt@gmail.com",  
+            "userRole": 0,    
+            "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI1MSwiaWF0IjoxNjQzODIyMTMzLCJleHAiOjE2NDM5MDg1MzN9.Q0DilX4LSum2SVsu2e7JYlKT2w3X_InsrhKsh2iinO4"  
+        }    
+
+
+## publication [posts]  
+
+### Creer une publication [POST]  
+
+Authentification avec token.  
+Remplir au minimum un titre et une description pour creer votre publication.    
+
++ Request (application/json)  
+ 
+    + Authorization    
+    
+            "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI1MSwiaWF0IjoxNjQzODIyMTMzLCJleHAiOjE2NDM5MDg1MzN9.Q0DilX4LSum2SVsu2e7JYlKT2w3X_InsrhKsh2iinO4"  
+
+    + body    
+
+        {    
+            "postTitre": "salut",    
+            "postDescription": "ceci est mon premier message sur cet intranet"    
+        }      
+
++ Response 201 (application/json)  
+
+        {  
+            "message": "Publication créé dans la base de donnée"  
+        }  
+        
+        
+### Renvoie la liste des publications [GET]  
+
+Authentification avec token  
+
++ Request (application/json)  
+
+    + Authorization  
+    
+            "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI1MSwiaWF0IjoxNjQzODIyMTMzLCJleHAiOjE2NDM5MDg1MzN9.Q0DilX4LSum2SVsu2e7JYlKT2w3X_InsrhKsh2iinO4"  
+
++ Response 200 (application/json)  
+
+    [  
+        {  
+            "id": 7,  
+            "postTitre": "salut",  
+            "postImgUrl": "",  
+            "postDescription": "ceci est mon premier message sur cet intranet",  
+            "postDate": "2022-02-02T17:43:43.000Z",  
+            "user_id": 251,  
+            "firstname": "pitt",  
+            "lastname": "brad",  
+            "usersEmail": "bradPitt@gmail.com",  
+            "comCount": 0,  
+            "userLike": 0,  
+            "likeCount": 1  
+        },  
+    ]  
+
+
+## commentaire [comments]  
+
+### Supprimer un commentaire [Delete]  
+
+La suppression d'un commentaire est disponible uniquement pur l'utilisateur défini comme chargé de communication  
+(userRole = 1)  
+
++ Request (application/json)  
+
+    + Parameters  
+    
+            id - ID de comments à integrer  
+             
+    + Authorization  
+    
+            "token": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjI1MSwiaWF0IjoxNjQzODIyMTMzLCJleHAiOjE2NDM5MDg1MzN9.Q0DilX4LSum2SVsu2e7JYlKT2w3X_InsrhKsh2iinO4"  
+
++ Response 201 (application/json)  
+
+        {  
+            "message": "commentaire supprimé !"  
+        }
