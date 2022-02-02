@@ -74,10 +74,10 @@
           <p class="title">{{ post.postTitre }}</p>
           <p class="description">{{ post.postDescription }}</p>
           <div class="blocImg">
-            <img
+            <img crossorigin
               class="postsImg"
               v-if="post.postImgUrl"
-              :alt="post.id"
+              :alt="post.postTitre"
               :src="post.postImgUrl"
             />
           </div>
