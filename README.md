@@ -8,58 +8,63 @@ Cette application doit être moderne, ludique et pemettre aux employés de se co
 
 ## Fonctionnalités de l'application pour tous :
 
-* Creation d'un compte et connexion de profil simplifié.
+- Creation d'un compte et connexion de profil simplifié.
     * __Le mot de passe doit comporter au minimum:__  
         * __8 caractères, 1 lettre majuscule, 1 lettre minuscule, 1 chiffre et un caractère spécifique.__ 
 
-* Accès __"creer un post"__ pour publier du contenu multimédia et du texte.    
-* Les dernieres publications employés sont affichés en premier avec la date et l'heure.  
-* Le nombre de commentaires indique le nombre d'interactions associés à une publication.  
-* Accès __"commenter"__ pour lire et commenter le dernier message.     
-* Possibilité de cliquer __"j'aime"__ sur la publication de son choix et cliquer pour le retirer.  
-* Possibilité de __changer son mot de passe__.  
-* Application entierement __disponible sur mobile__.   
+- Accès __"creer un post"__ pour publier du contenu multimédia et du texte.    
+- Les dernieres publications employés sont affichés en premier avec la date et l'heure.  
+- Le nombre de commentaires indique le nombre d'interactions associés à une publication.  
+- Accès __"commenter"__ pour lire et commenter le dernier message.     
+- Possibilité de cliquer __"j'aime"__ sur la publication de son choix et cliquer pour le retirer.  
+- Possibilité de __changer son mot de passe__.  
+- Application entierement __disponible sur mobile__.   
 
 
 ### Fonctionnalités supplémentaires uniquement disponible au chargé-e de communication Groupomania  
 
-* Identifiant de compte unique :
+- Identifiant de compte unique :
     * __email: adminN2@groupomania.fr__
     * __mot de passe: AdminN2groupomania@__ 
 
-* Acces __"comptes utilisateurs"__ pour supprimer un compte :   
+- Acces __"comptes utilisateurs"__ pour supprimer un compte :   
     * le compte, les j'aimes, les commentaires et les publications seront supprimés.  
 
-* Acces __"supprimer cette publication"__ :   
+- Acces __"supprimer cette publication"__ :   
     * la publication, les commentaires et les j'aimes seront supprimés.  
 
-* Accès __"supprimer ce commentaire"__ :  
+- Accès __"supprimer ce commentaire"__ :  
     * le commentaire sera supprimé.  
+
 
 ### Prérequis :
 
-* Installer Mysql : 
+- Installer Mysql : 
     * Executez `CREATE USER 'nouveau_utilisateur'@'localhost' IDENTIFIED BY 'mot_de_passe';`  
     Remplacez nouveau_utilisateur et mot_de_passe par vos propres informations.  
+
     * puis executez `GRANT ALL PRIVILEGES ON groupomania_socialnetwork. * TO 'nouveau_utilisateur'@'localhost';`  
     Remplacez nouveau_utilisateur par vos propres informations.  
 
-* Importez le fichier "groupomania_socialNetwork.sql" dans la base donnée.    
-* Dans le fichier ".env.exemple", completer les variables d'environnement par votre localhost mysql, votre identifiant et votre mot de passe.  
-Renommer le fichier ".env.exemple" par ".env"  
+- Importez le fichier "groupomania_socialNetwork.sql" dans la base donnée.  
 
+- Dans le fichier ".env.exemple" :  
+    * completer les variables d'environnement par votre localhost mysql, votre identifiant et votre mot de passe.  
+    * Creer votre token.  
+    * Renommer le fichier ".env.exemple" par ".env".  
 
 
 #### Backend  
-* Voir fichier Readme du backend.  
+
+- Voir fichier Readme du backend.  
 
 
 ##### Technologies : 
 
-* Base de donnée : Mysql.  
-* Frontend : 
+- Base de donnée : Mysql.  
+- Frontend : 
     * VueJs [https://cli.vuejs.org/guide/installation.html].
-    * VueRouter [https://router.vuejs.org/installation.html#npm]  
+    * VueRouter [https://router.vuejs.org/installation.html#npm].  
     * Vuex [https://vuex.vuejs.org/installation.html].  
 
     * installation des dependances : `npm install`  
