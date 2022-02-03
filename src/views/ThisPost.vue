@@ -14,11 +14,11 @@
           <div class="thisPostsInfos">
             <p class="title">{{ thisPost.postTitre }}</p>
             <p class="description">{{ thisPost.postDescription }}</p>
-            <div>
-              <img
+            <div class="blocImg">
+              <img crossorigin
                 class="postsImg"
                 v-if="thisPost.postImgUrl"
-                :alt="thisPost.id"
+                :alt="thisPost.postTitre"
                 :src="thisPost.postImgUrl"
               />
             </div>

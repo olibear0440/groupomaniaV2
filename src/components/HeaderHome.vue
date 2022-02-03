@@ -12,7 +12,6 @@ export default {
   data: () => {
     return {
       image: {
-        //link: "../assets/icon-above-font.png",
         alt: "logo Groupomania",
       },
     };

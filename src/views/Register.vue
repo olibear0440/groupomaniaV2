@@ -57,20 +57,21 @@
             name="password"
             aria-required="true"
             required
-          /><br />
+          />
           <p
             class="errorLogin"
             v-if="mode == 'loginAccount' && status == 'error_login'"
           >
-            Adresse mail et/ou mot de passe invalide
+            Echec de la connection; Email et/ou mot de passe non valide
           </p>
 
           <p
             class="errorLogin"
             v-if="mode == 'createAccount' && status == 'error_create'"
           >
-            Adresse mail déjà utilisée ou mot de passe invalide
+            Identifiants de connexion non valide ou adresse mail déjà utilisée
           </p>
+          <p id="errorRegxMdp"></p>
 
           <button
             @click="btnLoginAccount()"
@@ -145,6 +146,22 @@ export default {
     },
 
     btnCreateAccount: function () {
+      document.getElementById("password").classList.remove("inputError");
+      const errorMdp = document.getElementById("errorRegxMdp")
+      const regexs = [
+        /^.{8,}$/, //min 8 caractères 
+        /[A-Z]/, //min 1 lettres majuscules
+        /[a-z]/, //min 1 lettres minuscules
+        /\d/, //min 1 chiffre
+        /[@%#$^&*]/, //caracteres speciaux acceptés
+      ];
+      errorMdp.innerHTML = "";
+      if (regexs.some((regex) => !regex.test(this.mdp))) {
+        document.getElementById("password").classList.add("inputError");
+        errorMdp.innerHTML =
+          "Le mot de passe doit contenir 8 caractères minimum, une majuscule, une majuscule, un chiffre et un symbole";
+        return;
+      }
       let self = this;
       this.$store
         .dispatch("btnCreateAccount", {

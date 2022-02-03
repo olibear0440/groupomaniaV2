@@ -30,7 +30,7 @@
   margin: 0 auto;
   left: 0;
   right: 0;
-  top: 150px;
+  top: 120px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -91,6 +91,13 @@ span {
 .errorLogin {
   font-size: 14px;
   color: red;
+  margin-top: 0;
+}
+#errorRegxMdp{
+  color: #8e44ad;
+  font-size: 12px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .confirmForm {
