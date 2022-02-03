@@ -13,20 +13,11 @@ const cors = require("cors");
 //import morgan
 const morgan = require("morgan");
 
-//import rate-limit (protection force-brute)
-const rateLimit = require("express-rate-limit");
-
 //import des routes
 const registerRoutes = require("./routes/register");
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 const commentRoutes = require("./routes/comment");
-
-//fonction de limitation de requete
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-});
 
 //creation de l'application express
 const app = express();
@@ -44,8 +35,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
-app.use(limiter);
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(cors());
