@@ -176,9 +176,13 @@ p.commentNbr {
     width: auto;
     border: none;
   }
+  .allComBloc{
+    padding-top: 10px;
+  }
   .comMailStyle,
   .dateStyle {
     margin: 0;
+    text-align: left;
   }
   .comDelete {
     width: auto;

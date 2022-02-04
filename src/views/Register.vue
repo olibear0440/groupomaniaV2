@@ -51,7 +51,7 @@
           /><br />
           <input
             v-model="mdp"
-            type="text"
+            type="password"
             placeholder="Mot de passe"
             id="password"
             name="password"

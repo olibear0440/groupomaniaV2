@@ -41,7 +41,7 @@
               />
               <input
                 v-model="newPassword"
-                type="text"
+                type="password"
                 placeholder="Nouveau mot de passe"
                 id="newPassword"
                 name="newPassword"
