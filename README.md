@@ -8,6 +8,6 @@
   
  - Voir fichier README frontend
 
- ### Documentation API
+### Documentation API
 
  - Vous trouverez dans la racine du backend, le fichier __apiary.apib__ avec des exemples de requêtes et de réponses APi. 
