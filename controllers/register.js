@@ -73,12 +73,8 @@ exports.login = (req, res, next) => {
             expiresIn: "24h",
           });
           //envoi du token dans la base de donnée
-          const query =
-            "update users set Token = '" +
-            token +
-            "' where id = " +
-            results[0].id;
-          database.query(query);
+          const query = "update users set Token = ? where id = ?";
+          database.query(query, [token, results[0].id]);
           //Envoi des infos de l'utilisateur et du token
           res.status(200).json({
             userId: results[0].id,

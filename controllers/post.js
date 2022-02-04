@@ -18,11 +18,10 @@ exports.getPosts = (req, res, next) => {
       "FROM posts a " +
       "INNER JOIN users b ON a.user_id = b.id " +
       "LEFT OUTER JOIN (SELECT post_id, COUNT(id) as comCount FROM comments GROUP BY post_id) c ON a.id = c.post_id " +
-      "LEFT OUTER JOIN likes d ON a.id = d.post_id AND d.user_id = " +
-      userId +
-      " " +
+      "LEFT OUTER JOIN likes d ON a.id = d.post_id AND d.user_id = ? " +
       "LEFT OUTER JOIN (SELECT post_id, COUNT(id) as likeCount FROM likes GROUP BY post_id) e ON a.id = e.post_id " +
       "ORDER BY a.postDate DESC ",
+    [userId],
     (err, rows, fields) => {
       if (!err) res.send(rows);
       else {

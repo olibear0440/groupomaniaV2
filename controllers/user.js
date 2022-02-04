@@ -98,8 +98,8 @@ exports.deleteUser = (req, res, next) => {
             fs.unlinkSync(`images/${filename}`);
           }
         });
-        //...suppression des publications liées à l'user
-        const query = "DELETE FROM posts WHERE user_id = ?";
+        const query =
+          "DELETE A from likes A INNER JOIN posts B ON A.post_id = B.id AND B.user_id = ?";
         database.query(query, [user_id], (err, rows, fields) => {
           if (err) {
             res.status(400).json({
@@ -107,18 +107,39 @@ exports.deleteUser = (req, res, next) => {
                 " error : impossible de supprimer la publication de cet utilisateur",
             });
           }
-          //si pas d'erreur, supprimer le user
-          const query = "DELETE FROM users WHERE id = ?";
+          const query =
+            "DELETE A from comments A INNER JOIN posts B ON A.post_id = B.id AND B.user_id = ?";
           database.query(query, [user_id], (err, rows, fields) => {
             if (err) {
               res.status(400).json({
-                message: " error : impossible de supprimer cet utilisateur",
+                message:
+                  " error : impossible de supprimer la publication de cet utilisateur",
               });
-            } else {
-              return res
-                .status(200)
-                .json({ message: "Cet utilisateur est supprimé !" });
             }
+
+            //...suppression des publications liées à l'user
+            const query = "DELETE FROM posts WHERE user_id = ?";
+            database.query(query, [user_id], (err, rows, fields) => {
+              if (err) {
+                res.status(400).json({
+                  message:
+                    " error : impossible de supprimer la publication de cet utilisateur",
+                });
+              }
+              //si pas d'erreur, supprimer le user
+              const query = "DELETE FROM users WHERE id = ?";
+              database.query(query, [user_id], (err, rows, fields) => {
+                if (err) {
+                  res.status(400).json({
+                    message: " error : impossible de supprimer cet utilisateur",
+                  });
+                } else {
+                  return res
+                    .status(200)
+                    .json({ message: "Cet utilisateur est supprimé !" });
+                }
+              });
+            });
           });
         });
       });
