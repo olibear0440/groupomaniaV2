@@ -62,10 +62,13 @@ exports.getCurrentUser = (req, res, next) => {
 };
 
 /*
-  Supprimer un utilisateur, 
-  ses j'aimes,
-  ses commentaires et
-  ses publications 
+  Supprimer un utilisateur completement 
+  * supp ses j'aimes 
+  * supp ses commentaires 
+  * supp les j'aimes des autres utilisateurs sur ses publications
+  * supp les commentaires des autres utilisateurs sur ses publications 
+  * supp ses publications 
+  * supp l'utilisateur
 */
 exports.deleteUser = (req, res, next) => {
   const user_id = req.params.id;
@@ -98,25 +101,24 @@ exports.deleteUser = (req, res, next) => {
             fs.unlinkSync(`images/${filename}`);
           }
         });
+        //supprime les j'aimes associé aux publications et à l'user
         const query =
           "DELETE A from likes A INNER JOIN posts B ON A.post_id = B.id AND B.user_id = ?";
         database.query(query, [user_id], (err, rows, fields) => {
           if (err) {
             res.status(400).json({
-              message:
-                " error : impossible de supprimer la publication de cet utilisateur",
+              message: " error : impossible de supprimer les j'aimes",
             });
           }
+          //supprime les commentaires associés aux publications et à l'user
           const query =
             "DELETE A from comments A INNER JOIN posts B ON A.post_id = B.id AND B.user_id = ?";
           database.query(query, [user_id], (err, rows, fields) => {
             if (err) {
               res.status(400).json({
-                message:
-                  " error : impossible de supprimer la publication de cet utilisateur",
+                message: " error : impossible de supprimer les commentaires",
               });
             }
-
             //...suppression des publications liées à l'user
             const query = "DELETE FROM posts WHERE user_id = ?";
             database.query(query, [user_id], (err, rows, fields) => {
