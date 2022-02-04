@@ -5,8 +5,8 @@ const limiter = require("../rateLimit");
 
 /*
     * routes:
-        - creer un utilisateur
-        - enregistrer un utilisateur existant
+        * creer un utilisateur
+        * enregistrer un utilisateur existant
 */
 
 router.post("/signup", registerCtrl.signup);

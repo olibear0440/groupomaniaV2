@@ -5,9 +5,9 @@ const commentCtrl = require("../controllers/comment");
 
 /*
     * routes:
-        - creer un commentaire
-        - renvois les commentaires d'une publication
-        - supprimer un commentaire
+        * creer un commentaire
+        * renvois les commentaires d'une publication
+        * supprimer un commentaire
 
     * protection des routes par middleware d'authentification
 */

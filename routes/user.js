@@ -5,11 +5,11 @@ const userCtrl = require("../controllers/user");
 
 /*
     * routes:
-        - renvois tous les utilisateurs
-        - renvoi l'utilisateur de la session par son token
-        - renvoi un utilisateur par son ID
-        - supprimer un utilisateur
-        - modifier le mdp d'un utilisateur
+        * renvois tous les utilisateurs
+        * renvoi l'utilisateur de la session par son token
+        * renvoi un utilisateur par son ID
+        * supprimer un utilisateur
+        * modifier le mdp d'un utilisateur
 
     * protection des routes par middleware d'authentification
 */

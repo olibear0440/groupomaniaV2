@@ -15,12 +15,9 @@ const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, "images");
   },
-  /*
-  indication d'utiliser des parametres: 
-  nom d'origine 
-  espace vs underscore 
-  ajout de timestamp comme nom de fichier
-  */
+  //indication d'utiliser des parametres: nom d'origine espace vs underscore
+  //ajout de timestamp comme nom de fichier
+
   filename: (req, file, callback) => {
     const name = file.originalname.split(" ").join("_");
     const extension = MIME_TYPES[file.mimetype];
