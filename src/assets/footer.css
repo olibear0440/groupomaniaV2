@@ -1,6 +1,6 @@
 /*style du pied de page accueil intranet*/
 
-.homeFooterBloc{
+.homeFooterBloc {
   padding-left: 30px;
   padding-right: 30px;
 }
@@ -22,7 +22,7 @@
   padding: 20px 10px;
   width: 30%;
 }
-.footerThree{
+.footerThree {
   padding: 20px 10px;
   width: 30%;
 }
@@ -34,7 +34,7 @@
   color: #8e44ad;
 }
 @media screen and (max-width: 375px) and (max-width: 720px) {
-  .homeFooterBloc{
+  .homeFooterBloc {
     width: 100%;
     height: auto;
     padding: 0px;
@@ -47,7 +47,8 @@
     height: auto;
   }
   .footerOne,
-  .footerTwo, .footerThree {
+  .footerTwo,
+  .footerThree {
     width: 100%;
   }
   .footerOne {
@@ -56,10 +57,10 @@
   .footerTwo {
     padding: 0;
   }
-  .footerThree{
+  .footerThree {
     padding: 0;
   }
-  .footerText:nth-child(2){
+  .footerText:nth-child(2) {
     margin-bottom: 0;
   }
 }

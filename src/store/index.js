@@ -44,17 +44,6 @@ const mutations = {
   SET_STATUS(state, status) {
     state.status = status;
   },
-
-  UPDATE_MDP(state, newMdp) {
-    state.newMdp = newMdp;
-  },
-
-  LOG_NEWPOST(state, newPost) {
-    state.newPost = newPost;
-  },
-  LOG_NEWCOMMENT(state, newComment) {
-    state.newComment = newComment;
-  },
   //recuperer header token et enregistrer dans localstorage le user
   LOG_USER(state, user) {
     instance.defaults.headers.common["Authorization"] = user.token;
@@ -63,6 +52,15 @@ const mutations = {
   },
   CURRENT_USER(state, currentUser) {
     state.currentUser = currentUser;
+  },
+  LOG_NEWPOST(state, newPost) {
+    state.newPost = newPost;
+  },
+  LOG_NEWCOMMENT(state, newComment) {
+    state.newComment = newComment;
+  },
+  UPDATE_MDP(state, newMdp) {
+    state.newMdp = newMdp;
   },
   GET_ALL_USERS(state, allUsers) {
     state.allUsers = allUsers;
@@ -88,7 +86,6 @@ const mutations = {
   POST_LIKE(state, postLike) {
     state.postLike = postLike;
   },
-
   //deconnecter la session et supprimer le user du localstorage
   btnLogout(state) {
     state.user = {
@@ -98,9 +95,11 @@ const mutations = {
     localStorage.removeItem("user");
   },
 };
+
 const getters = {};
+
 const actions = {
-  //appel api sur le btn (connexion) pour le login du compte
+  //appel api sur le btn "connexion" pour le login du compte
   btnLoginAccount: ({ commit }, infoUser) => {
     commit("SET_STATUS", "loading");
     return new Promise((resolve, reject) => {
@@ -118,7 +117,7 @@ const actions = {
     });
   },
 
-  //appel api sur le btn (creer mon compte) pour la creation du compte
+  //appel api sur le btn "creer mon compte" pour la creation du compte
   btnCreateAccount: ({ commit }, newUser) => {
     commit("SET_STATUS", "loading");
     return new Promise((resolve, reject) => {
@@ -135,7 +134,7 @@ const actions = {
     });
   },
 
-  //appel api pour le changement de mot de passe
+  //appel api sur le bouton "changer le mdp" pour le changement de mot de passe
   btnChangeMdp({ commit }) {
     if (
       window.confirm(
@@ -170,7 +169,9 @@ const actions = {
       .then((response) => {
         commit("CURRENT_USER", response.data);
       })
-      .catch(function () {});
+      .catch((error) => {
+        console.log(error);
+      });
   },
   //appel api pour afficher la liste de tt les utilisateurs
   getAllUsers({ commit }) {
@@ -179,17 +180,21 @@ const actions = {
       .then((response) => {
         commit("GET_ALL_USERS", response.data);
       })
-      .catch(function () {});
+      .catch((error) => {
+        console.log(error);
+      });
   },
 
-  //appel api de tt les posts
+  //appel api qui renvoie tt les posts
   getAllPosts({ commit }) {
     instance
       .get("/posts")
       .then((response) => {
         commit("GET_ALL_POSTS", response.data);
       })
-      .catch(function () {});
+      .catch((error) => {
+        console.log(error);
+      });
   },
 
   //appel api pour la creation d'un post
@@ -225,7 +230,7 @@ const actions = {
       });
   },
 
-  //appel api pour recuperer le post
+  //appel api pour recuperer le post avec son id
   getThisPost({ commit }, idRoute) {
     const token = JSON.parse(localStorage.getItem("user")).token;
     instance
@@ -239,10 +244,12 @@ const actions = {
           commit("GET_THISPOST", response.data[0]);
         }
       })
-      .catch(function () {});
+      .catch((error) => {
+        console.log(error);
+      });
   },
 
-  //appel api sur le btn (publier un com) pour la creation d'un com
+  //appel api sur le btn "publier un com" pour la creation d'un commentaire
   btnCreateComment({ commit }, commentBody) {
     if (window.confirm("Voulez vous valider ce commentaire ?") != true) {
       return;
@@ -256,14 +263,16 @@ const actions = {
       .catch((error) => console.log(error));
   },
 
-  //appel api de tt les comments
+  //appel api qui renvoie tt les commentaires
   getAllCom({ commit }, idRoute) {
     instance
       .get("/comments/" + idRoute)
       .then((response) => {
         commit("GET_ALL_COM", response.data);
       })
-      .catch(function () {});
+      .catch((error) => {
+        console.log(error);
+      });
   },
 
   //appel api suppression d'un utilisateur
@@ -283,14 +292,15 @@ const actions = {
         },
       })
       .then((response) => {
-        console.log(response.data);
         commit("DELETE_USER", response.data);
         location.reload();
       })
-      .catch(function () {});
+      .catch((error) => {
+        console.log(error);
+      });
   },
 
-  //appel api suppression des coms
+  //appel api suppression des commentaires
   deleteComment({ commit }, idCom) {
     if (window.confirm("Ce commentaire sera supprimé !") != true) {
       return;
@@ -306,7 +316,9 @@ const actions = {
         commit("DELETE_THISCOM", response.data);
         location.reload();
       })
-      .catch(function () {});
+      .catch((error) => {
+        console.log(error);
+      });
   },
 
   //appel api suppression d'un posts
@@ -326,11 +338,12 @@ const actions = {
         },
       })
       .then((response) => {
-        console.log(response.data);
         commit("DELETE_THISPOST", response.data);
         location.reload();
       })
-      .catch(function () {});
+      .catch((error) => {
+        console.log(error);
+      });
   },
 
   //appel api creation de like
@@ -346,7 +359,9 @@ const actions = {
         commit("POST_LIKE", response.data);
         location.reload();
       })
-      .catch(function () {});
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 

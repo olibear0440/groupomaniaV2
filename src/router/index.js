@@ -3,8 +3,8 @@ import Home from "../views/Home.vue";
 import Register from "../views/Register.vue";
 import Posts from "../views/Posts.vue";
 import Mypost from "../views/Mypost.vue";
-import ThisPost from "../views/ThisPost.vue"
-import Users from "../views/Users.vue"
+import ThisPost from "../views/ThisPost.vue";
+import Users from "../views/Users.vue";
 
 const routes = [
   {

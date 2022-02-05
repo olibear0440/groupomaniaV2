@@ -22,11 +22,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.homePage{
+.homePage {
   font-family: Arial, Helvetica, sans-serif;
-    margin: 0 auto;
-    max-width: 1000px;
-    height: auto;
+  margin: 0 auto;
+  max-width: 1000px;
+  height: auto;
 }
-
 </style>

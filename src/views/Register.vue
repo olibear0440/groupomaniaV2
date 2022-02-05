@@ -1,7 +1,11 @@
 <template>
   <div class="registerBloc">
     <div class="registerLogo">
-      <img class="homeLogo" src="../assets/img/logoSimple.png" alt="logo groupomania" />
+      <img
+        class="homeLogo"
+        src="../assets/img/logoSimple.png"
+        alt="logo groupomania"
+      />
     </div>
     <div class="createAccount">
       <div id="formTitre">
@@ -147,9 +151,9 @@ export default {
 
     btnCreateAccount: function () {
       document.getElementById("password").classList.remove("inputError");
-      const errorMdp = document.getElementById("errorRegxMdp")
+      const errorMdp = document.getElementById("errorRegxMdp");
       const regexs = [
-        /^.{8,}$/, //min 8 caractères 
+        /^.{8,}$/, //min 8 caractères
         /[A-Z]/, //min 1 lettres majuscules
         /[a-z]/, //min 1 lettres minuscules
         /\d/, //min 1 chiffre

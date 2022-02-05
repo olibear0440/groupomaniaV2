@@ -39,10 +39,10 @@
 }
 
 @media screen and (min-width: 375px) and (max-width: 720px) {
-  .BackToPostLink{
+  .BackToPostLink {
     margin: 0;
   }
-  
+
   .BackToPostBloc {
     display: flex;
     flex-direction: column;

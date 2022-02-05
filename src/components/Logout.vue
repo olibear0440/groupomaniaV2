@@ -1,7 +1,11 @@
 <template>
   <div class="navLogoutBloc">
     <div class="blocPostsLogo">
-      <img class="pagePostsLogo" src="../assets/img/logoSimple.png" alt="logo groupomania" />
+      <img
+        class="pagePostsLogo"
+        src="../assets/img/logoSimple.png"
+        alt="logo groupomania"
+      />
     </div>
     <div class="logoutBloc">
       <div @click="btnLogout()" class="logoutLink">Deconnexion</div>

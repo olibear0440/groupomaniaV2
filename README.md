@@ -3,7 +3,7 @@
 Groupomania est une entreprise spécialisé dans la grande distribution. Cette entreprise en pleine expansion, à doublé son nombre de collaborateur en 3 ans.  
 
 Afin d'améliorer la motivation et l'implication des employés, la direction souhaite la __création d'un réseau social d'entreprise__.  
-Cette application doit être moderne, ludique et pemettre aux employés de se connaitre dans un cadre plus informel.
+Cette application doit être moderne, ludique et permettre aux employés de se connaitre dans un cadre plus informel.
 
 
 ## Fonctionnalités de l'application pour tous :
@@ -16,16 +16,18 @@ Cette application doit être moderne, ludique et pemettre aux employés de se co
 - Les dernieres publications employés sont affichés en premier avec la date et l'heure.  
 - Le nombre de commentaires indique le nombre d'interactions associés à une publication.  
 - Accès __"commenter"__ pour lire et commenter le dernier message.     
-- Possibilité de cliquer __"j'aime"__ sur la publication de son choix et cliquer pour le retirer.  
-- Possibilité de __changer son mot de passe__.  
+- Possibilité de cliquer __"j'aime"__ sur la publication de son choix et re-cliquer pour le retirer.  
+- Accès __changer le mot de passe__ pour affecter un nouvau mot de passe.  
 - Application entierement __disponible sur mobile__.   
 
 
-### Fonctionnalités supplémentaires uniquement disponible au chargé-e de communication Groupomania  
+### Fonctionnalités supplémentaires uniquement disponible au chargé-e de communication Groupomania
 
-- Identifiant de compte unique :
+- Identifiant de compte chargé de communication unique  
+(bdd userRole = 1) :
     * __email: adminN2@groupomania.fr__
     * __mot de passe: AdminN2groupomania@__ 
+    
 
 - Acces __"comptes utilisateurs"__ pour supprimer un compte :   
     * le compte, les j'aimes, les commentaires et les publications seront supprimés.  
@@ -46,12 +48,12 @@ Cette application doit être moderne, ludique et pemettre aux employés de se co
     * puis executez `GRANT ALL PRIVILEGES ON groupomania_socialnetwork. * TO 'nouveau_utilisateur'@'localhost';`  
     Remplacez nouveau_utilisateur par vos propres informations.  
 
-- Importez le fichier "groupomania_socialNetwork.sql" dans la base donnée.  
+- Importez le fichier "groupomania_socialNetwork.sql" qui se trouve dans la racine du backend dans votre base de donnée.  
 
 - Dans le fichier ".env.exemple" :  
     * completer les variables d'environnement par votre localhost mysql, votre identifiant et votre mot de passe.  
     * Creer votre token.  
-    * Renommer le fichier ".env.exemple" par ".env".  
+    * Renommer le fichier par ".env".  
 
 
 #### Backend  

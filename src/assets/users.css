@@ -19,13 +19,12 @@
   border-bottom: 1px solid #f0f0f0;
   padding: 20px 30px;
 }
-.usersTitle h2{
+.usersTitle h2 {
   margin: 0;
 }
 .users {
   padding: 5px 30px;
   background-color: white;
-  
 }
 .usersInfos {
   display: flex;
@@ -53,23 +52,26 @@
   text-align: center;
 }
 @media screen and (min-width: 375px) and (max-width: 1000px) {
-  .adminBloc{
+  .adminBloc {
     margin-bottom: 5px;
   }
-  .usersTitle, .users {
+  .usersTitle,
+  .users {
     padding-left: 10px;
     padding-right: 10px;
   }
-  .users{
+  .users {
     margin-bottom: 10px;
   }
-  .usersInfos{
+  .usersInfos {
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  .userEmail, .userFirstname, .userLastname, .btnDeleteUser{
+  .userEmail,
+  .userFirstname,
+  .userLastname,
+  .btnDeleteUser {
     width: 100%;
   }
-  
 }

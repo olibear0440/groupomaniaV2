@@ -74,7 +74,8 @@
           <p class="title">{{ post.postTitre }}</p>
           <p class="description">{{ post.postDescription }}</p>
           <div class="blocImg">
-            <img crossorigin
+            <img
+              crossorigin
               class="postsImg"
               v-if="post.postImgUrl"
               :alt="post.postTitre"
@@ -155,7 +156,7 @@ export default {
 
       //variable regexs
       const regexs = [
-        /^.{8,}$/, //min 8 caractères 
+        /^.{8,}$/, //min 8 caractères
         /[A-Z]/, //min 1 lettres majuscules
         /[a-z]/, //min 1 lettres minuscules
         /\d/, //min 1 chiffre
