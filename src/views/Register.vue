@@ -51,6 +51,7 @@
             id="email"
             name="email"
             aria-required="true"
+            aria-label="email"
             required
           /><br />
           <input
@@ -60,6 +61,7 @@
             id="password"
             name="password"
             aria-required="true"
+            aria-label="mot de passe"
             required
           />
           <p

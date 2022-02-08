@@ -110,8 +110,8 @@ p.commentNbr {
   padding: 0px 5px 5px 0px;
 }
 .confirmComment {
-  background-color: #8e44ad;
-  border: 2px solid #8e44ad;
+  background-color: rgb(51, 103, 214);
+  border: 2px solid rgb(51, 103, 214);
   border-radius: 3px;
   color: white;
   padding: 10px;
@@ -130,7 +130,7 @@ p.commentNbr {
   height: 30px;
 }
 .deleteComment:hover {
-  color: #8e44ad;
+  color: rgb(51, 103, 214);
 }
 
 .allComBloc {
@@ -142,10 +142,10 @@ p.commentNbr {
 }
 .userInfoCom {
   display: flex;
-  color: gray;
+  color: #797676;
 }
 .dateStyle {
-  color: #999999;
+  color: #797676;
   margin-left: 20px;
 }
 .comDelete {
@@ -160,6 +160,7 @@ p.commentNbr {
   text-align: start;
 }
 .msgComStyle {
+  color: rgb(51, 103, 214);
   margin: 5px 0px;
   font-family: cursive;
 }

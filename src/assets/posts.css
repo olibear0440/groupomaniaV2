@@ -52,7 +52,7 @@ h1 {
   align-items: baseline;
   padding: 5px;
   width: 100%;
-  color: gray;
+  color: #797676;
 }
 
 .profilPassword {
@@ -61,7 +61,7 @@ h1 {
   align-items: stretch;
   padding: 5px;
   width: 100%;
-  color: gray;
+  color: #797676;
 }
 .updatePassword {
   width: 100%;
@@ -122,8 +122,8 @@ h1 {
   background-color: #ffc0c0;
 }
 .btnCreatePost {
-  background-color: #8e44ad;
-  border: 1px solid #8e44ad;
+  background-color: rgb(51, 103, 214);
+  border: 1px solid rgb(51, 103, 214);
   border-radius: 3px;
   color: white;
   display: block;
@@ -184,7 +184,7 @@ h1 {
 }
 
 .postsUsersInfos {
-  color: gray;
+  color: #797676;
 }
 .textMail,
 .textDate {
@@ -209,7 +209,7 @@ h1 {
 .description {
   text-align: start;
   width: auto;
-  color: #8e44ad;
+  color: rgb(51, 103, 214);
 }
 .blocImg {
   border-radius: 5px;
@@ -274,7 +274,7 @@ h1 {
 }
 .fa-thumbs-up {
   text-decoration: none;
-  color: #8e44ad;
+  color: rgb(51, 103, 214);
   padding: 5px;
 }
 .btnDeletePost {

@@ -94,15 +94,15 @@ span {
   margin-top: 0;
 }
 #errorRegxMdp {
-  color: #8e44ad;
+  color: rgb(51, 103, 214);
   font-size: 12px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
 .confirmForm {
-  background-color: #8e44ad;
-  border: 2px solid #8e44ad;
+  background-color: rgb(51, 103, 214);
+  border: 2px solid rgb(51, 103, 214);
   color: white;
   display: block;
   padding: 10px;

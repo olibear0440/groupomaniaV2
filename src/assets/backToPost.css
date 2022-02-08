@@ -24,7 +24,7 @@
 .BackToPostLink {
   font-size: 1.5em;
   font-weight: bold;
-  color: #a3a3a3;
+  color: rgb(51, 103, 214);
   text-decoration: none;
   padding: 5px;
   cursor: pointer;
@@ -32,10 +32,6 @@
 
 .BackToPostLink {
   margin-right: 30px;
-}
-.logoutLink:hover,
-.BackToPostLink:hover {
-  color: #8e44ad;
 }
 
 @media screen and (min-width: 375px) and (max-width: 720px) {

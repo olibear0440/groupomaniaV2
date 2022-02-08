@@ -37,6 +37,7 @@
                 placeholder="Mot de passe actuel"
                 id="currentPassword"
                 name="currentPassword"
+                aria-label="mot de passe actuel"
                 required
               />
               <input
@@ -45,6 +46,7 @@
                 placeholder="Nouveau mot de passe"
                 id="newPassword"
                 name="newPassword"
+                aria-label="nouveau mot de passe"
                 required
               />
             </form>
@@ -71,7 +73,7 @@
           <p class="textDate">{{ renderDate(post.postDate) }}</p>
         </div>
         <div class="postsInfos">
-          <p class="title">{{ post.postTitre }}</p>
+          <h3 class="title">{{ post.postTitre }}</h3>
           <p class="description">{{ post.postDescription }}</p>
           <div class="blocImg">
             <img

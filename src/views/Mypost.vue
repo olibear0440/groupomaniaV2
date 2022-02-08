@@ -20,6 +20,7 @@
               placeholder="Titre"
               id="postTitre"
               name="postTitre"
+              aria-label="titre"
               required
             />
             <textarea
@@ -27,6 +28,7 @@
               placeholder="Votre message"
               id="postDescription"
               name="postDescription"
+              aria-label="description"
               required
             ></textarea>
             <input
@@ -36,6 +38,7 @@
               ref="myFiles"
               @change="uploadFile()"
               name="postImgUrl"
+              aria-label="fichier"
               required
             />
             <span id="createPostError"></span>

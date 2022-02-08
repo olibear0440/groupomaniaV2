@@ -12,7 +12,7 @@
             <p>{{ renderDate(thisPost.postDate) }}</p>
           </div>
           <div class="thisPostsInfos">
-            <p class="title">{{ thisPost.postTitre }}</p>
+            <h3 class="title">{{ thisPost.postTitre }}</h3>
             <p class="description">{{ thisPost.postDescription }}</p>
             <div class="blocImg">
               <img
@@ -51,6 +51,7 @@
                 placeholder="Ecrire un commentaire..."
                 id="commentText"
                 name="commentText"
+                aria-label="commentaire"
                 required
               />
               <div class="btnCommentBloc">

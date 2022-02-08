@@ -12,7 +12,7 @@
   border-top-right-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   width: auto;
-  border-bottom: 10px solid #8e44ad;
+  border-bottom: 10px solid rgb(51, 103, 214);
   height: 600px;
   display: flex;
   flex-direction: row;
@@ -33,6 +33,6 @@ img {
   .logo {
     width: auto;
     height: auto;
-    border-bottom: 2px solid #8e44ad;
+    border-bottom: 2px solid rgb(51, 103, 214);
   }
 }

@@ -10,8 +10,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  font-weight: bold;
-  color: #a3a3a3;
+  font-weight: lighter;
+  color: black;
   font-size: 1.2em;
 }
 .footerOne {
@@ -30,9 +30,7 @@
   cursor: pointer;
   padding: 5px;
 }
-.footerText:hover {
-  color: #8e44ad;
-}
+
 @media screen and (max-width: 375px) and (max-width: 720px) {
   .homeFooterBloc {
     width: 100%;
@@ -42,7 +40,6 @@
   }
   .footerBloc {
     flex-direction: column;
-    color: #a3a3a3;
     width: 100%;
     height: auto;
   }
