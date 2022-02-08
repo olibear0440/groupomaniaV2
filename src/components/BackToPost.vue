@@ -8,9 +8,13 @@
       />
     </div>
     <div class="BackToPostBloc">
-      <div @click="btnLogout()" class="logoutLink">Deconnexion</div>
+      <div @click="btnLogout()">
+        <router-link class="logoutLink" to="/">Deconnexion</router-link>
+      </div>
       -
-      <div class="BackToPostLink" @click="btnBackToPost()">Retour</div>
+      <div @click="btnBackToPost()">
+        <router-link class="BackToPostLink" to="/Posts">Retour</router-link>
+      </div>
     </div>
   </div>
 </template>

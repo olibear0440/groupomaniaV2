@@ -8,9 +8,15 @@
       />
     </div>
     <div class="logoutBloc">
-      <div @click="btnLogout()" class="logoutLink">Deconnexion</div>
+      <div @click="btnLogout()">
+        <router-link class="logoutLink" to="/">Deconnexion</router-link>
+      </div>
       -
-      <div class="createPostLink" @click="btnCreateMyPost()">Creer un post</div>
+      <div @click="btnCreateMyPost()">
+        <router-link class="createPostLink" to="/Mypost"
+          >Creer un post</router-link
+        >
+      </div>
     </div>
   </div>
 </template>

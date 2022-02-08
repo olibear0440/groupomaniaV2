@@ -157,7 +157,7 @@ export default {
         /[A-Z]/, //min 1 lettres majuscules
         /[a-z]/, //min 1 lettres minuscules
         /\d/, //min 1 chiffre
-        /[@%#$^&*]/, //caracteres speciaux acceptés
+        /[@%#^&*]/, //caracteres speciaux acceptés
       ];
       errorMdp.innerHTML = "";
       if (regexs.some((regex) => !regex.test(this.mdp))) {
