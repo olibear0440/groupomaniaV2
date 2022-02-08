@@ -4,6 +4,9 @@ const express = require("express");
 //import helmet (protection en-tete http)
 const helmet = require("helmet");
 
+//import xss-clean (nettoie les inputs users des requetes et des parametres url)
+const xss = require("xss-clean");
+
 //import variable d'environnement
 require("dotenv").config();
 
@@ -36,6 +39,7 @@ app.use((req, res, next) => {
 });
 
 app.use(helmet());
+app.use(xss());
 app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
