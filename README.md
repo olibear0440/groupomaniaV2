@@ -9,8 +9,8 @@ Cette application doit être moderne, ludique et permettre aux employés de se c
 
 - Creation d'un compte et connexion de profil simplifié.
 
-  - **Le mot de passe doit comporter au minimum:**
-    - **8 caractères, 1 lettre majuscule, 1 lettre minuscule, 1 chiffre et un caractère spécifique.**
+  - **Le mot de passe doit comporter au minimum:**  
+  - **8 caractères, 1 lettre majuscule, 1 lettre minuscule, 1 chiffre et un caractère spécifique.**
 
 - Accès **"creer un post"** pour publier du contenu multimédia et du texte.
 - Les dernieres publications employés sont affichés en premier avec la date et l'heure.
@@ -23,25 +23,25 @@ Cette application doit être moderne, ludique et permettre aux employés de se c
 ## Fonctionnalités supplémentaires uniquement disponible au chargé-e de communication Groupomania
 
 - Identifiant de compte chargé de communication unique  
-  (bdd userRole = 1) :
-  _ **email: adminN2@groupomania.fr**
-  _ **mot de passe: AdminN2groupomania@**
-- Acces **"comptes utilisateurs"** pour supprimer un compte :
+  (bdd userRole = 1) :    
 
-  - le compte, les j'aimes, les commentaires et les publications seront supprimés.
+  _ **email: adminN2@groupomania.fr**  
+  _ **mot de passe: AdminN2groupomania@**  
 
-- Acces **"supprimer cette publication"** :
+- Acces **"comptes utilisateurs"** pour supprimer un compte :  
+  - le compte, les j'aimes, les commentaires et les publications seront supprimés.  
 
-  - la publication, les commentaires et les j'aimes seront supprimés.
+- Acces **"supprimer cette publication"** :  
+  - la publication, les commentaires et les j'aimes seront supprimés.  
 
-- Accès **"supprimer ce commentaire"** :
-  - le commentaire sera supprimé.
+- Accès **"supprimer ce commentaire"** :  
+  - le commentaire sera supprimé.  
 
 # Prérequis :
 
-- Clonez les repertoires backend et frontend respectivement sur les branches **main** et **master**
+- Clonez les repertoires backend et frontend respectivement sur les branches **main** et **master**  
 
-- Installer Mysql :
+- Installer Mysql :  
 
   - Executez `CREATE USER 'nouveau_utilisateur'@'localhost' IDENTIFIED BY 'mot_de_passe';`  
     Remplacez nouveau_utilisateur et mot_de_passe par vos propres informations.
@@ -51,10 +51,10 @@ Cette application doit être moderne, ludique et permettre aux employés de se c
 
 - Importez le fichier "groupomania_socialNetwork.sql" qui se trouve dans la racine du backend dans votre base de donnée.
 
-- Dans le fichier ".env.exemple" :
-  - completer les variables d'environnement par votre localhost mysql, votre identifiant et votre mot de passe.
-  - Creer votre token.
-  - Renommer le fichier par ".env".
+- Dans le fichier ".env.exemple" :  
+  - completer les variables d'environnement par votre localhost mysql, votre identifiant et votre mot de passe.  
+  - Creer votre token.  
+  - Renommer le fichier par ".env".  
 
 ## Backend
 
