@@ -1,4 +1,4 @@
-# L'objectif :
+## L'objectif :
 
 Groupomania est une entreprise spécialisé dans la grande distribution. Cette entreprise en pleine expansion, à doublé son nombre de collaborateur en 3 ans.
 
@@ -20,7 +20,7 @@ Cette application doit être moderne, ludique et permettre aux employés de se c
 - Accès **changer le mot de passe** pour affecter un nouvau mot de passe.
 - Application entierement **disponible sur mobile**.
 
-### Fonctionnalités supplémentaires uniquement disponible au chargé-e de communication Groupomania
+## Fonctionnalités supplémentaires uniquement disponible au chargé-e de communication Groupomania
 
 - Identifiant de compte chargé de communication unique  
   (bdd userRole = 1) :
@@ -63,7 +63,7 @@ Cette application doit être moderne, ludique et permettre aux employés de se c
 - Executez `nodemon server` pour mettre à jour le server.
 - Vous trouverez dans la racine du backend, le fichier **apiary.apib** avec des exemples de requêtes et de réponses APi.
 
-### Frontend :
+## Frontend :
 
 - Frontend :
 
