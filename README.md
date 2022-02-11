@@ -37,7 +37,7 @@ Cette application doit être moderne, ludique et permettre aux employés de se c
 - Accès **"supprimer ce commentaire"** :
   - le commentaire sera supprimé.
 
-#### Prérequis :
+# Prérequis :
 
 - Clonez les repertoires backend et frontend respectivement sur les branches **main** et **master**
 
@@ -56,14 +56,14 @@ Cette application doit être moderne, ludique et permettre aux employés de se c
   - Creer votre token.
   - Renommer le fichier par ".env".
 
-##### Backend
+## Backend
 
 - Installez NodeJs [https://nodejs.org/en/]
 - Installez la dépendance nodemon `npm install -g nodemon`.
 - Executez `nodemon server` pour mettre à jour le server.
 - Vous trouverez dans la racine du backend, le fichier **apiary.apib** avec des exemples de requêtes et de réponses APi.
 
-###### Frontend :
+### Frontend :
 
 - Frontend :
 
@@ -73,7 +73,3 @@ Cette application doit être moderne, ludique et permettre aux employés de se c
 
   - installation des dependances : `npm install`
   - lancement de l'application : `npm run serve`
-
-
-
-
